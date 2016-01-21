@@ -1,23 +1,27 @@
 <h1> Tic Tac Toe Game Settings </h2>
-<div id="stylized">
 <form action="/settings" method="post">
-
+  <br>
+  <br>
   <label>Player One Marker:</label>
   <input type="text" name="player_one_marker" placeholder="X"><br>
   <label>Player Two Marker:</label>
   <input type="text" name="player_two_marker" placeholder="O"><br>
-
+  <br>
+  <br>
   <label>Player One will be AI:  </label>
   <input type="radio" name="player_one_type" value="AI" checked="checked"/><br>
   <label>Player One will be Human Player: </label>
-  <input type="radio" name="player_one_type" value="Human"/><br>
+  <input type="radio" name="player_one_type" value="Human"/>
+  <br>
+  <br>
   <label>Player Two will be AI: </label>
-  <input type="radio" name="player_two_type" value="AI" checked="checked"/><br>
+  <input type="radio" name="player_two_type" value="AI" checked="checked"/> <br>
   <label>Player Two will be Human Player: </label>
-  <input type="radio" name="player_two_type" value="Human" /><br>
+  <input type="radio" name="player_two_type" value="Human" />
+  <br>
+  <br>
   <label>Player that goes first:</label>
   <label>Player One: </label><input type="radio" name="first_player" value="player_one_marker" checked="checked"/>
   <label>Player Two: </label><input type="radio" name="first_player" value="player_two_marker"/>
   <input type="submit">
 </form>
-</div>

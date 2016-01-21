@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title><%= @title %> </title>
+</head>
+<body>
+	<header>
+  <% if $game.player_one_won? %>
+      <h1> Player One has Won! </h1>
+  <% elsif $game.player_two_won? %>
+      <h1> Player Two has Won! </h1>
+  <% else %>
+      <h1> The Game is Tied! </h1>
+  <% end %>
+  <br>
+	<h2> Thanks for playing!</h2>
+  <h2> <a href="/settings"> To play again, click here. </a> </h2>
+	</header>
+</body>
+</html>

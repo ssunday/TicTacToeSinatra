@@ -23,9 +23,9 @@ class TicTacToeRules
 
   def switch_turn
     if player_turn.eql?(player_two_marker)
-      @player_turn = player_one_marker
+      @player_turn = @player_one_marker
     else
-      @player_turn = player_two_marker
+      @player_turn = @player_two_marker
     end
   end
 
