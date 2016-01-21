@@ -13,6 +13,14 @@ class TicTacToeRules
     switch_turn
   end
 
+  def get_board
+    @board
+  end
+
+  def get_array_board
+    @board.board
+  end
+
   def switch_turn
     if player_turn.eql?(player_two_marker)
       @player_turn = player_one_marker
