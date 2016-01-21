@@ -1,6 +1,6 @@
 class TicTacToeRules
-  attr_reader :player_turn, :player_one_marker, :player_two_marker, :board
-  attr_writer :board
+  attr_reader :player_turn, :player_one_marker, :player_two_marker
+
   def initialize(initial_board, player_info = {}) #first_player, player_one, player_two)
     @player_turn = player_info[:first_player]
     @player_one_marker = player_info[:player_one]
