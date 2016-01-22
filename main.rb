@@ -1,10 +1,13 @@
 require 'sinatra'
 require_relative 'tic_tac_toe_board.rb'
 require_relative 'tic_tac_toe_rules.rb'
+require_relative 'tic_tac_toe_ai.rb'
 enable :sessions
 get '/' do
 	@title = 'Home'
 	$game = nil
+	$player_one_ai = nil
+	$player_two_ai = nil
 	erb :index
 end
 
@@ -22,6 +25,12 @@ post '/settings' do
 		first_player = $player_one_marker
 	else
 		first_player = $player_two_marker
+	end
+	if params[:player_one_type].eql?("AI")
+		$player_one_ai = TicTacToeAi.new(ai_marker: $player_one_marker, other_player_marker: $player_two_marker)
+	end
+	if params[:player_two_type].eql?("AI")
+		$player_two_ai = TicTacToeAi.new(ai_marker: $player_two_marker, other_player_marker: $player_one_marker)
 	end
 	$game = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one_marker: $player_one_marker, player_two_marker: $player_two_marker)
 	$board = $game.get_board
