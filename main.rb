@@ -2,61 +2,67 @@ require 'sinatra'
 require_relative 'tic_tac_toe_board.rb'
 require_relative 'tic_tac_toe_rules.rb'
 require_relative 'tic_tac_toe_ai.rb'
-enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'tic-tac-toe'
+
 get '/' do
 	@title = 'Home'
-	$game = nil
-	$player_one_ai = nil
-	$player_two_ai = nil
+	session.clear
 	erb :index
 end
 
 get '/settings' do
   @title = "Game Settings"
-	$game = nil
   erb :settings
 end
 
 post '/settings' do
 	@title = "Game Settings"
-  $player_one_marker = params[:player_one_marker]
-	$player_two_marker = params[:player_two_marker]
+	session["player_one_marker"] = params[:player_one_marker]
+	session["player_two_marker"] = params[:player_two_marker]
 	if params[:first_player].eql?("player_one_marker")
-		first_player = $player_one_marker
+		first_player = params[:player_one_marker]
 	else
-		first_player = $player_two_marker
+		first_player = params[:player_two_marker]
 	end
 	if params[:player_one_type].eql?("AI")
-		$player_one_ai = TicTacToeAi.new(ai_marker: $player_one_marker, other_player_marker: $player_two_marker)
+		session["player_one_ai"] = TicTacToeAi.new(ai_marker: session["player_one_marker"], other_player_marker: session["player_two_marker"])
+	else
+		session["player_one_ai"] = nil
 	end
 	if params[:player_two_type].eql?("AI")
-		$player_two_ai = TicTacToeAi.new(ai_marker: $player_two_marker, other_player_marker: $player_one_marker)
+		session["player_two_ai"] = TicTacToeAi.new(ai_marker: session["player_two_marker"], other_player_marker: session["player_one_marker"])
+	else
+		session["player_two_ai"] = nil
 	end
-	$game = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one_marker: $player_one_marker, player_two_marker: $player_two_marker)
-	$board = $game.get_board
-	$board_array = $game.get_array_board
+	session["game"] = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: session["player_one_marker"], player_two: session["player_two_marker"])
+	session["board"] = session["game"].get_board
+	session["board_array"] = session["game"].get_array_board
 	redirect '/play_game'
 end
 
 get '/play_game' do
 	@title = "Game"
-  $board = $game.get_board
-	$board_array = $game.get_array_board
+	if session["game"].game_over?
+		redirect '/end_game'
+		return nil
+	end
+  session["board"] = session["game"].get_board
+	session["board_array"] = session["game"].get_array_board
 	erb :play_game
 end
 
 post '/play_game' do
 	@title = "Game"
-	location_chosen = params[:spot].to_i
-	if $game.game_over?
-		redirect '/end_game'
-		return nil
+	current_board = TicTacToeBoard.new(board: Array.new(session["game"].get_array_board))
+	if session["game"].player_turn.eql?(session["player_one_marker"]) && session["player_one_ai"] != nil
+		location_chosen = session["player_one_ai"].move(current_board, session["player_one_marker"])
+	elsif session["game"].player_turn.eql?(session["player_two_marker"]) && session["player_two_ai"] != nil
+		location_chosen = session["player_two_ai"].move(current_board, session["player_two_marker"])
 	else
-		$game.game_turn(location_chosen)
-		$board = $game.get_board
-		$board_array = $game.get_array_board
+		location_chosen = params[:spot].to_i
 	end
-	erb :play_game
+	session["game"].game_turn(location_chosen)
+	redirect to('/play_game')
 end
 
 get '/end_game' do
