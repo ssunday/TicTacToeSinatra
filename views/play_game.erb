@@ -11,35 +11,35 @@
     <h1> AI TURN </h1>
     <table>
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][0] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][1] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][2] %>
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][3] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][4] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][5] %>
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][6] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][7] %>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
           <%= session["board_array"][8] %>
       </td>
     </tr>
@@ -58,21 +58,21 @@
     <table>
     <form action="/play_game" method="post">
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <% if session["board"].location_valid_to_mark?(location: 0, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="0">
         <% else%>
           <%= session["board_array"][0] %>
         <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
       <%if session["board"].location_valid_to_mark?(location: 1, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
         <input type="radio" name="spot" value="1">
       <%else%>
         <%= session["board_array"][1] %>
       <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 2, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="2">
         <%else%>
@@ -81,21 +81,21 @@
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 3, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="3">
         <%else%>
           <%= session["board_array"][3] %>
         <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 4, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="4">
         <%else%>
           <%= session["board_array"][4] %>
         <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 5, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="5">
         <%else%>
@@ -104,21 +104,21 @@
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 6, player_one_marker: session["player_one_marker"], player_two_marker:session["player_two_marker"]) %>
           <input type="radio" name="spot" value="6">
         <%else%>
           <%= session["board_array"][6] %>
         <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 7, player_one_marker: session["player_one_marker"], player_two_marker:session["player_two_marker"]) %>
           <input type="radio" name="spot" value="7">
         <%else%>
           <%= session["board_array"][7] %>
         <%end%>
       </td>
-      <td>
+      <td style="padding:0 15px 0 15px;">
         <%if session["board"].location_valid_to_mark?(location: 8, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
           <input type="radio" name="spot" value="8">
         <%else%>

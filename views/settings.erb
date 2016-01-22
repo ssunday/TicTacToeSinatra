@@ -1,5 +1,11 @@
 <h1> Tic Tac Toe Game Settings </h2>
+<br>
+<% if form.failed? %>
+  <h2> Please make sure the markers are a single character and not a number. </h2>
+<% end %>
+<br>
 <form action="/settings" method="post">
+  <h2> Markers should be a single, non-number character. </h2>
   <br>
   <br>
   <label>Player One Marker:</label>
