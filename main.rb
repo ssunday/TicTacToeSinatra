@@ -1,7 +1,7 @@
 require 'sinatra'
-require_relative 'tic_tac_toe_board.rb'
-require_relative 'tic_tac_toe_rules.rb'
-require_relative 'tic_tac_toe_ai.rb'
+require_relative 'assets/tic_tac_toe_board.rb'
+require_relative 'assets/tic_tac_toe_rules.rb'
+require_relative 'assets/tic_tac_toe_ai.rb'
 require 'sinatra/formkeeper'
 
 use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'tic-tac-toe'
