@@ -24,7 +24,12 @@ describe "Tic Tac Toe Web App" do
       get '/settings'
       expect(last_response).to be_ok
     end
+
   end
 
+  it "Can post settings" do
+    post '/settings'
+    expect(last_response).to be_ok
+  end
 
 end
