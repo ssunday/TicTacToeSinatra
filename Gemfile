@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 gem "sinatra"
 gem 'sinatra-formkeeper'
+gem "activerecord"
+gem "sinatra-activerecord"
 
 group :development, :test do
   gem 'sqlite3'

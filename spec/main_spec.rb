@@ -13,8 +13,18 @@ end
 RSpec.configure { |c| c.include RSpecMixin }
 
 describe "Tic Tac Toe Web App" do
-  it "should allow accessing the home page" do
-    get '/'
-    expect(last_response).to be_ok
+
+  describe "should allow access to" do
+    it "the home page" do
+      get '/'
+      expect(last_response).to be_ok
+    end
+
+    it "the settings page" do
+      get '/settings'
+      expect(last_response).to be_ok
+    end
   end
+
+
 end
