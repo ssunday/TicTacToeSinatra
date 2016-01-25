@@ -12,9 +12,11 @@ Clone the repository onto desktop.
 
 ### Usage
 
-Enter into the /TicTacToeSinatra folder and type in this in the command line:
+
+Enter into the /TicTacToeSinatra folder and type the following lines on the command line:
 
 ```
+bundle install
 ruby main.rb
 ```
 And then go to http://localhost:4567/
