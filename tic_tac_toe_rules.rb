@@ -13,12 +13,16 @@ class TicTacToeRules
     switch_turn
   end
 
-  def get_board
-    @board
-  end
-
   def get_array_board
     @board.board
+  end
+
+  def get_location_value(location)
+    @board.board[location]
+  end
+
+  def location_valid_to_mark?(location)
+    @board.location_valid_to_mark?(location: location, player_one_marker: @player_one_marker, player_two_marker: @player_two_marker)
   end
 
   def switch_turn

@@ -46,8 +46,7 @@ post '/settings' do
 			session["player_two_ai"] = nil
 		end
 		session["game"] = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: session["player_one_marker"], player_two: session["player_two_marker"])
-		session["board"] = session["game"].get_board
-		session["board_array"] = session["game"].get_array_board
+		#session["board_array"] = session["game"].get_array_board
 		redirect '/play_game'
   end
 end
@@ -58,8 +57,7 @@ get '/play_game' do
 		redirect '/end_game'
 		return nil
 	end
-  session["board"] = session["game"].get_board
-	session["board_array"] = session["game"].get_array_board
+	#session["board_array"] = session["game"].get_array_board
 	erb :play_game
 end
 

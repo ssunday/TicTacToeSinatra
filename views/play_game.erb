@@ -1,135 +1,97 @@
 <!doctype html>
 <html lang="en">
 <body>
+
+  <% if session["game"].player_turn == session["player_one_marker"]%>
+    <h1> It is Player One's Turn. Marker: <%= session["player_one_marker"] %></h1>
+  <% else %>
+    <h1> It is Player Two's Turn. Marker: <%= session["player_two_marker"] %> </h1>
+  <% end %>
+
   <% if (session["player_two_ai"] != nil && session["game"].player_turn == session["player_two_marker"]) \
     || (session["player_one_ai"] != nil && session["game"].player_turn == session["player_one_marker"])%>
-    <% if session["game"].player_turn == session["player_one_marker"]%>
-      <h1> It is Player One's Turn. Marker: <%= session["player_one_marker"] %></h1>
-    <% else %>
-      <h1> It is Player Two's Turn. Marker: <%= session["player_two_marker"] %> </h1>
-    <% end %>
-    <h1> AI TURN </h1>
-    <table>
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][0] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][1] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][2] %>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][3] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][4] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][5] %>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][6] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][7] %>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-          <%= session["board_array"][8] %>
-      </td>
-    </tr>
-    </table>
-    <form action="/play_game" method="post">
-    <label> Next turn! </label> <input type="submit">
-    </form>
+    <% player_turn = false %>
+    <h1> AI Turn </h1>
   <% elsif (session["player_one_ai"] == nil && session["game"].player_turn == session["player_one_marker"]) \
   || (session["player_two_ai"] == nil && session["game"].player_turn == session["player_two_marker"])%>
-    <% if session["game"].player_turn == session["player_one_marker"]%>
-      <h1> It is Player One's Turn. Marker: <%= session["player_one_marker"] %></h1>
-    <% else %>
-      <h1> It is Player Two's Turn. Marker: <%= session["player_two_marker"] %> </h1>
-    <% end %>
     <h2> Pick an open spot to mark. </h2>
-    <table>
-    <form action="/play_game" method="post">
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-        <% if session["board"].location_valid_to_mark?(location: 0, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="0">
-        <% else%>
-          <%= session["board_array"][0] %>
-        <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-      <%if session["board"].location_valid_to_mark?(location: 1, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-        <input type="radio" name="spot" value="1">
-      <%else%>
-        <%= session["board_array"][1] %>
-      <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 2, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="2">
-        <%else%>
-          <%= session["board_array"][2] %>
-        <%end%>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 3, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="3">
-        <%else%>
-          <%= session["board_array"][3] %>
-        <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 4, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="4">
-        <%else%>
-          <%= session["board_array"][4] %>
-        <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 5, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="5">
-        <%else%>
-          <%= session["board_array"][5] %>
-        <%end%>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 6, player_one_marker: session["player_one_marker"], player_two_marker:session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="6">
-        <%else%>
-          <%= session["board_array"][6] %>
-        <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 7, player_one_marker: session["player_one_marker"], player_two_marker:session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="7">
-        <%else%>
-          <%= session["board_array"][7] %>
-        <%end%>
-      </td>
-      <td style="padding:0 15px 0 15px;">
-        <%if session["board"].location_valid_to_mark?(location: 8, player_one_marker: session["player_one_marker"], player_two_marker: session["player_two_marker"]) %>
-          <input type="radio" name="spot" value="8">
-        <%else%>
-          <%= session["board_array"][8] %>
-        <%end%>
-      </td>
-    </tr>
-    </table>
-    <br>
-    <input type="submit">
+    <% player_turn = true %>
   <%end%>
+  <br>
+  <table>
+  <form action="/play_game" method="post">
+  <tr>
+    <td style="padding:0 15px 0 15px;">
+      <% if session["game"].location_valid_to_mark?(0) && player_turn%>
+        <input type="radio" name="spot" value="0">
+      <% else%>
+        <%= session["game"].get_location_value(0) %>
+      <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+    <%if session["game"].location_valid_to_mark?(1) && player_turn%>
+      <input type="radio" name="spot" value="1">
+    <%else%>
+      <%= session["game"].get_location_value(1) %>
+    <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(2) && player_turn%>
+        <input type="radio" name="spot" value="2">
+      <%else%>
+        <%= session["game"].get_location_value(2) %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(3) && player_turn%>
+        <input type="radio" name="spot" value="3">
+      <%else%>
+        <%= session["game"].get_location_value(3) %>
+      <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(4) && player_turn%>
+        <input type="radio" name="spot" value="4">
+      <%else%>
+        <%= session["game"].get_location_value(4) %>
+      <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(5) && player_turn %>
+        <input type="radio" name="spot" value="5">
+      <%else%>
+        <%= session["game"].get_location_value(5) %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(6) && player_turn %>
+        <input type="radio" name="spot" value="6">
+      <%else%>
+        <%= session["game"].get_location_value(6) %>
+      <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(7) && player_turn %>
+        <input type="radio" name="spot" value="7">
+      <%else%>
+        <%= session["game"].get_location_value(7) %>
+      <%end%>
+    </td>
+    <td style="padding:0 15px 0 15px;">
+      <%if session["game"].location_valid_to_mark?(8) && player_turn %>
+        <input type="radio" name="spot" value="8">
+      <%else%>
+        <%= session["game"].get_location_value(8) %>
+      <%end%>
+    </td>
+  </tr>
+  </table>
+  <br>
+  <label> Next turn! </label> <input type="submit">
 </form>
 </body>
 </html>
