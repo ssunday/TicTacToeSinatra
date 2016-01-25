@@ -19,16 +19,18 @@ end
 
 post '/settings' do
 	@title = "Game Settings"
+
+	session["player_one_marker"] = params[:player_one_marker]
+	session["player_two_marker"] = params[:player_two_marker]
+
 	form do
-		field :player_one_marker, :present => true, :length => 1
-		field :player_two_marker, :present => true, :length => 1
+		field :player_one_marker, :present => true, :length => 1, :int => false
+		field :player_two_marker, :present => true, :length => 1, :int => false
 	end
 
-	if form.failed?
+	if form.failed? || (session["player_one_marker"].eql?(session["player_two_marker"]))
     erb :settings
   else
-		session["player_one_marker"] = params[:player_one_marker]
-		session["player_two_marker"] = params[:player_two_marker]
 		if params[:first_player].eql?("player_one_marker")
 			first_player = params[:player_one_marker]
 		else
@@ -46,7 +48,6 @@ post '/settings' do
 			session["player_two_ai"] = nil
 		end
 		session["game"] = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: session["player_one_marker"], player_two: session["player_two_marker"])
-		#session["board_array"] = session["game"].get_array_board
 		redirect '/play_game'
   end
 end
@@ -57,7 +58,6 @@ get '/play_game' do
 		redirect '/end_game'
 		return nil
 	end
-	#session["board_array"] = session["game"].get_array_board
 	erb :play_game
 end
 

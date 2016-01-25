@@ -1,11 +1,11 @@
 <h1> Tic Tac Toe Game Settings </h2>
 <br>
-<% if form.failed? %>
-  <h2> Please make sure the markers are a single character and not a number. </h2>
+<% if form.failed? || (session["player_one_marker"].eql?(session["player_two_marker"]) && session["player_one_marker"] != nil)%>
+  <h2> Please make sure the markers are a single character and not a number and that they do not equal each other. </h2>
 <% end %>
 <br>
 <form action="/settings" method="post">
-  <h2> Markers should be a single, non-number character. </h2>
+  <h2> Markers should be a single, non-number character that are unique from each other. </h2>
   <br>
   <br>
   <label>Player One Marker:</label>
