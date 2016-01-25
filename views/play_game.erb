@@ -12,11 +12,11 @@
     || (session["player_one_ai"] != nil && session["game"].player_turn == session["player_one_marker"])%>
     <% player_turn = false %>
     <h1> AI Turn </h1>
-  <% elsif (session["player_one_ai"] == nil && session["game"].player_turn == session["player_one_marker"]) \
-  || (session["player_two_ai"] == nil && session["game"].player_turn == session["player_two_marker"])%>
+  <% else%>
     <h2> Pick an open spot to mark. </h2>
     <% player_turn = true %>
   <%end%>
+
   <br>
   <table>
   <form action="/play_game" method="post">
@@ -91,7 +91,9 @@
   </tr>
   </table>
   <br>
+
   <label> Next turn! </label> <input type="submit">
+  
 </form>
 </body>
 </html>
