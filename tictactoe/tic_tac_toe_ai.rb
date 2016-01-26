@@ -8,25 +8,25 @@ class TicTacToeAi
   end
 
   def move(board, current_player, depth = 0, best_score={})
+
     if game_over?(board)
       return score(board, current_player, depth)
     end
 
     available_spaces = get_possible_moves(board)
-
     available_spaces.each do |space|
       board.set_board_location(space.to_i, current_player)
       next_player = switch_turn(current_player)
-      best_score[space.to_i] = move(board, next_player, depth + 1, {}).to_i
+      best_score[space.to_i] = -1 * move(board, next_player, depth + 1, {})
       board.set_board_location(space.to_i, space)
     end
 
-    best_move = best_score.max_by { |key, value| value }[0]
-    highest_minimax_score = best_score.max_by { |key, value| value }[1]
+    best_move = best_score.max_by { |space, score| score }[0]
+    highest_minimax_score = best_score.max_by { |space, score| score }[1]
 
     if depth == 0
       return best_move.to_i
-    else
+    elsif depth > 0
       return highest_minimax_score
     end
 
@@ -34,10 +34,10 @@ class TicTacToeAi
 
   def score(board, current_player, depth)
     if ai_won?(board, current_player)
-        return 10 - depth
+        return 100 - depth
     elsif other_player_won?(board, current_player)
-        return depth - 10
-    else
+        return depth - 100
+    elsif tied?(board)
         return 0
     end
   end

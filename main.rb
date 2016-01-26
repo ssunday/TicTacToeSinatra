@@ -62,7 +62,7 @@ get '/play_game' do
 end
 
 post '/play_game' do
-	@title = "Game"
+	@title = "Play Game"
 	current_board = TicTacToeBoard.new(board: Array.new(session["game"].get_array_board.dup))
 	if session["game"].player_turn.eql?(session["player_one_marker"]) && session["player_one_ai"] != nil
 		location_chosen = session["player_one_ai"].move(current_board, session["player_one_marker"])
