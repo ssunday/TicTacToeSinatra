@@ -7,7 +7,7 @@ class TicTacToeAi
     @other_player_marker = markers[:other_player_marker]
   end
 
-  def move(board, current_player, depth=0, best_score={})
+  def move(board, current_player, depth = 0, best_score={})
     if game_over?(board)
       return score(board, current_player, depth)
     end
@@ -15,9 +15,9 @@ class TicTacToeAi
     available_spaces = get_possible_moves(board)
 
     available_spaces.each do |space|
+      board.set_board_location(space.to_i, current_player)
       next_player = switch_turn(current_player)
-      board.set_board_location(space.to_i, next_player)
-      best_score[space.to_i] =  move(board, next_player, depth + 1, {})
+      best_score[space.to_i] = move(board, next_player, depth + 1, {}).to_i
       board.set_board_location(space.to_i, space)
     end
 
@@ -34,9 +34,9 @@ class TicTacToeAi
 
   def score(board, current_player, depth)
     if ai_won?(board, current_player)
-        return 100 - depth
+        return 10 - depth
     elsif other_player_won?(board, current_player)
-        return depth - 100
+        return depth - 10
     else
         return 0
     end

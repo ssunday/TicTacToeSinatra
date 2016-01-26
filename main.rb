@@ -3,7 +3,6 @@ require_relative 'tictactoe/tic_tac_toe_board.rb'
 require_relative 'tictactoe/tic_tac_toe_rules.rb'
 require_relative 'tictactoe/tic_tac_toe_ai.rb'
 require 'sinatra/formkeeper'
-#require 'sinatra/activerecord'
 
 use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'tic-tac-toe'
 
