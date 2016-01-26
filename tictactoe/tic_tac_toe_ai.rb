@@ -22,24 +22,25 @@ class TicTacToeAi
     end
 
     best_move = best_score.max_by { |space, score| score }[0]
-    highest_minimax_score = best_score.max_by { |space, score| score }[1]
+    highest_score = best_score.max_by { |space, score| score }[1]
 
     if depth == 0
       return best_move.to_i
     elsif depth > 0
-      return highest_minimax_score
+      return highest_score
     end
 
   end
 
   def score(board, current_player, depth)
     if ai_won?(board, current_player)
-        return 100 - depth
+        return 10 - depth
     elsif other_player_won?(board, current_player)
-        return depth - 100
+        return depth - 10
     elsif tied?(board)
         return 0
     end
+
   end
 
   private
