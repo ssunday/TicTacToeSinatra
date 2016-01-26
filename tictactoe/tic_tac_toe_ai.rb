@@ -17,7 +17,7 @@ class TicTacToeAi
     available_spaces.each do |space|
       next_player = switch_turn(current_player)
       board.set_board_location(space.to_i, next_player)
-      best_score[space.to_i] = move(board, next_player, depth + 1, {})
+      best_score[space.to_i] =  move(board, next_player, depth + 1, {})
       board.set_board_location(space.to_i, space)
     end
 
