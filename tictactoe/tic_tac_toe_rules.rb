@@ -18,7 +18,7 @@ class TicTacToeRules
   end
 
   def get_location_value(location)
-    @board.board[location]
+    @board.get_board_location(location)
   end
 
   def location_valid_to_mark?(location)

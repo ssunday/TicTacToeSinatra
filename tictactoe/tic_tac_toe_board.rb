@@ -9,6 +9,10 @@ class TicTacToeBoard
     board[location] = marker
   end
 
+  def get_board_location(spot)
+    board[spot]
+  end
+
   def location_valid_to_mark?(args = {})
     board[args[:location]] != args[:player_one_marker] && board[args[:location]] != args[:player_two_marker]
   end

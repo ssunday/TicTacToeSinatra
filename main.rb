@@ -1,8 +1,9 @@
 require 'sinatra'
-require_relative 'assets/tic_tac_toe_board.rb'
-require_relative 'assets/tic_tac_toe_rules.rb'
-require_relative 'assets/tic_tac_toe_ai.rb'
+require_relative 'tictactoe/tic_tac_toe_board.rb'
+require_relative 'tictactoe/tic_tac_toe_rules.rb'
+require_relative 'tictactoe/tic_tac_toe_ai.rb'
 require 'sinatra/formkeeper'
+#require 'sinatra/activerecord'
 
 use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'tic-tac-toe'
 
@@ -63,13 +64,17 @@ end
 
 post '/play_game' do
 	@title = "Game"
-	current_board = TicTacToeBoard.new(board: Array.new(session["game"].get_array_board))
+	current_board = TicTacToeBoard.new(board: Array.new(session["game"].get_array_board.dup))
 	if session["game"].player_turn.eql?(session["player_one_marker"]) && session["player_one_ai"] != nil
 		location_chosen = session["player_one_ai"].move(current_board, session["player_one_marker"])
 	elsif session["game"].player_turn.eql?(session["player_two_marker"]) && session["player_two_ai"] != nil
 		location_chosen = session["player_two_ai"].move(current_board, session["player_two_marker"])
 	else
-		location_chosen = params[:spot].to_i
+		if params[:spot] == nil
+			redirect to('/play_game')
+		else
+			location_chosen = params[:spot].to_i
+		end
 	end
 	session["game"].game_turn(location_chosen)
 	redirect to('/play_game')
