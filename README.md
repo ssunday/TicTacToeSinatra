@@ -26,6 +26,6 @@ And then go to http://localhost:4567/
 
 
 ### History
-
+27/1/2016 - Converted to a database system and now allows users to see previous games.
 25/1/2016 - Deployed with heroku
 25/1/2016 - removed code duplication and created ReadMe
