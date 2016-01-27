@@ -3,34 +3,83 @@ require_relative 'tictactoe/tic_tac_toe_board.rb'
 require_relative 'tictactoe/tic_tac_toe_rules.rb'
 require_relative 'tictactoe/tic_tac_toe_ai.rb'
 require 'sinatra/formkeeper'
+require 'data_mapper'
 
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'tic-tac-toe'
+DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
+
+class Game
+  include DataMapper::Resource
+  property :general_id, String, :key => true
+  property :player_one_marker, String
+  property :player_two_marker, String
+	property :player_one_ai, Object, :required => false
+	property :player_two_ai, Object, :required => false
+	property :game_rules, Object
+end
+
+DataMapper.auto_upgrade!
+DataMapper.finalize
+#Below code was found on Stack Overflow to make it so an Object property properly updates.
+#http://stackoverflow.com/questions/18698331/updating-object-property-in-datamappers
+module DataMapper
+  module Resource
+    def make_dirty(*attributes)
+      if attributes.empty?
+        return
+      end
+      unless self.clean?
+        self.save
+      end
+      dirty_state = DataMapper::Resource::PersistenceState::Dirty.new(self)
+      attributes.each do |attribute|
+        property = self.class.properties[attribute]
+        dirty_state.original_attributes[property] = nil
+        self.persistence_state = dirty_state
+      end
+    end
+  end
+end
 
 get '/' do
 	@title = 'Home'
-	session.clear
+  game = Game.last(:general_id => "Active Game")
+  if game != nil
+    game.destroy
+  end
 	erb :index
 end
 
 get '/settings' do
   @title = "Game Settings"
+  @duplicated = false
   erb :settings
 end
 
 post '/settings' do
 	@title = "Game Settings"
 
-	session["player_one_marker"] = params[:player_one_marker]
-	session["player_two_marker"] = params[:player_two_marker]
-
 	form do
 		field :player_one_marker, :present => true, :length => 1, :int => false
 		field :player_two_marker, :present => true, :length => 1, :int => false
 	end
 
-	if form.failed? || (session["player_one_marker"].eql?(session["player_two_marker"]))
+  @duplicated = params[:player_one_marker].eql?(params[:player_two_marker])
+
+  game = Game.last(:general_id => "Active Game")
+  if game != nil
+    game.destroy
+  end
+
+	if form.failed? || @duplicated
+    @game = Game.last(:general_id => "Active Game")
     erb :settings
   else
+    game = Game.new
+    game.general_id = "Active Game"
+
+    game.player_one_marker = params[:player_one_marker]
+    game.player_two_marker = params[:player_two_marker]
+
 		if params[:first_player].eql?("player_one_marker")
 			first_player = params[:player_one_marker]
 		else
@@ -38,23 +87,27 @@ post '/settings' do
 		end
 
 		if params[:player_one_type].eql?("AI")
-			session["player_one_ai"] = TicTacToeAi.new(ai_marker: session["player_one_marker"], other_player_marker: session["player_two_marker"])
+			game.player_one_ai = TicTacToeAi.new(ai_marker: params[:player_one_marker], other_player_marker: params[:player_two_marker])
 		else
-			session["player_one_ai"] = nil
+			game.player_one_ai = nil
 		end
+
 		if params[:player_two_type].eql?("AI")
-			session["player_two_ai"] = TicTacToeAi.new(ai_marker: session["player_two_marker"], other_player_marker: session["player_one_marker"])
+			game.player_two_ai = TicTacToeAi.new(ai_marker: params[:player_two_marker], other_player_marker: params[:player_one_marker])
 		else
-			session["player_two_ai"] = nil
+			game.player_two_ai = nil
 		end
-		session["game"] = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: session["player_one_marker"], player_two: session["player_two_marker"])
+
+		game.game_rules = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: params[:player_one_marker], player_two: params[:player_two_marker])
+    game.save
 		redirect '/play_game'
   end
 end
 
 get '/play_game' do
 	@title = "Game"
-	if session["game"].game_over?
+  @game = Game.last(:general_id => "Active Game")
+	if @game.game_rules.game_over?
 		redirect '/end_game'
 		return nil
 	end
@@ -63,11 +116,12 @@ end
 
 post '/play_game' do
 	@title = "Play Game"
-	current_board = TicTacToeBoard.new(board: Array.new(session["game"].get_array_board.dup))
-	if session["game"].player_turn.eql?(session["player_one_marker"]) && session["player_one_ai"] != nil
-		location_chosen = session["player_one_ai"].move(current_board, session["player_one_marker"])
-	elsif session["game"].player_turn.eql?(session["player_two_marker"]) && session["player_two_ai"] != nil
-		location_chosen = session["player_two_ai"].move(current_board, session["player_two_marker"])
+  @game = Game.last(:general_id => "Active Game")
+	current_board = TicTacToeBoard.new(board: Array.new(@game.game_rules.get_array_board.dup))
+	if @game.game_rules.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai != nil
+		location_chosen = @game.player_one_ai.move(current_board, @game.player_one_marker)
+	elsif @game.game_rules.player_turn.eql?(@game.player_two_marker) && @game.player_two_ai != nil
+		location_chosen = @game.player_two_ai.move(current_board, @game.player_two_marker)
 	else
 		if params[:spot] == nil
 			redirect to('/play_game')
@@ -75,12 +129,15 @@ post '/play_game' do
 			location_chosen = params[:spot].to_i
 		end
 	end
-	session["game"].game_turn(location_chosen)
+  @game.game_rules.game_turn(location_chosen)
+  @game.make_dirty(:game_rules)
+  @game.save
 	redirect to('/play_game')
 end
 
 get '/end_game' do
 	@title = "Game Over"
+  @game = Game.last(:general_id => "Active Game")
 	erb :end_game
 end
 

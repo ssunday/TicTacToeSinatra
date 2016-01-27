@@ -1,6 +1,6 @@
 <h1> Tic Tac Toe Game Settings </h2>
 <br>
-<% if form.failed? || (session["player_one_marker"].eql?(session["player_two_marker"]) && session["player_one_marker"] != nil)%>
+<% if form.failed? || @duplicated %>
   <h2> Please make sure the markers are a single character and not a number and that they do not equal each other. </h2>
 <% end %>
 <br>

@@ -5,9 +5,9 @@
 </head>
 <body>
 	<header>
-  <% if session["game"].player_one_won? %>
+  <% if @game.game_rules.player_one_won? %>
       <h1> Player One has Won! </h1>
-  <% elsif session["game"].player_two_won? %>
+  <% elsif @game.game_rules.player_two_won? %>
       <h1> Player Two has Won! </h1>
   <% else %>
       <h1> The Game is Tied! </h1>
