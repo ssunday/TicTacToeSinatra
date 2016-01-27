@@ -9,16 +9,19 @@ DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ
 
 class Game
   include DataMapper::Resource
-  property :general_id, String, :key => true
+  property :id, Serial
   property :player_one_marker, String
   property :player_two_marker, String
 	property :player_one_ai, Object, :required => false
 	property :player_two_ai, Object, :required => false
 	property :game_rules, Object
+  property :previous_or_active, String
+  property :end_game_state, String, :required => false
 end
 
 DataMapper.auto_upgrade!
 DataMapper.finalize
+
 #Below code was found on Stack Overflow to make it so an Object property properly updates.
 #http://stackoverflow.com/questions/18698331/updating-object-property-in-datamappers
 module DataMapper
@@ -42,10 +45,6 @@ end
 
 get '/' do
 	@title = 'Home'
-  game = Game.last(:general_id => "Active Game")
-  if game != nil
-    game.destroy
-  end
 	erb :index
 end
 
@@ -65,17 +64,12 @@ post '/settings' do
 
   @duplicated = params[:player_one_marker].eql?(params[:player_two_marker])
 
-  game = Game.last(:general_id => "Active Game")
-  if game != nil
-    game.destroy
-  end
-
 	if form.failed? || @duplicated
-    @game = Game.last(:general_id => "Active Game")
+    @game = Game.last(:previous_or_active => "Active")
     erb :settings
   else
     game = Game.new
-    game.general_id = "Active Game"
+    game.previous_or_active = "Active"
 
     game.player_one_marker = params[:player_one_marker]
     game.player_two_marker = params[:player_two_marker]
@@ -106,7 +100,7 @@ end
 
 get '/play_game' do
 	@title = "Game"
-  @game = Game.last(:general_id => "Active Game")
+  @game = Game.last(:previous_or_active => "Active")
 	if @game.game_rules.game_over?
 		redirect '/end_game'
 		return nil
@@ -116,7 +110,7 @@ end
 
 post '/play_game' do
 	@title = "Play Game"
-  @game = Game.last(:general_id => "Active Game")
+  @game = Game.last(:previous_or_active => "Active")
 	current_board = TicTacToeBoard.new(board: Array.new(@game.game_rules.get_array_board.dup))
 	if @game.game_rules.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai != nil
 		location_chosen = @game.player_one_ai.move(current_board, @game.player_one_marker)
@@ -135,9 +129,17 @@ post '/play_game' do
 	redirect to('/play_game')
 end
 
+get '/previous_games' do
+  @title = "Previouss"
+  @previous_games = Game.all(:previous_or_active => "Previous")
+  erb :previous_games
+end
+
 get '/end_game' do
 	@title = "Game Over"
-  @game = Game.last(:general_id => "Active Game")
+  @game = Game.last(:previous_or_active => "Active")
+  @game.previous_or_active = "Previous"
+  @game.save
 	erb :end_game
 end
 
