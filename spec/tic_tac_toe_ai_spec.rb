@@ -26,8 +26,8 @@ describe TicTacToeAi do
   context "AI has two in a row already and the third is open" do
 
     xit "#best_move chooses winning move" do
-      win_board = TicTacToeBoard.new(board: ["O", "O", "2", "3", "4", "5", "6", "7", "8"])
-      expect(ai_player.move(win_board, @player_turn)).to eq 2
+      win_board = TicTacToeBoard.new(board: ["O", "O", "2", "O", "4", "5", "6", "7", "8"])
+      expect(ai_player.move(win_board, @player_turn)).to eq 5
     end
 
     xit "#best_move chooses winning move" do

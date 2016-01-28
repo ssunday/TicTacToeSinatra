@@ -51,46 +51,5 @@ describe "Tic Tac Toe Web App" do
     expect(last_response).to be_ok
   end
 
-  xit "Play game redirects after end" do
-    post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "Human", :player_two_type => "Human", :first_player => "player_one_marker"
-    post '/play_game' , :spot => 0
-    post '/play_game' , :spot => 1
-    post '/play_game' , :spot => 2
-    post '/play_game' , :spot => 3
-    post '/play_game' , :spot => 4
-    post '/play_game' , :spot => 5
-    post '/play_game' , :spot => 6
-    post '/play_game' , :spot => 7
-    post '/play_game' , :spot => 8
-    expect(last_response).to be_ok
-  end
-
-  xit "Won game goes to won end game screen" do
-    post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "Human", :player_two_type => "Human", :first_player => "player_one_marker"
-    post '/play_game' , :spot => 0
-    post '/play_game' , :spot => 1
-    post '/play_game' , :spot => 2
-    post '/play_game' , :spot => 3
-    post '/play_game' , :spot => 4
-    post '/play_game' , :spot => 5
-    post '/play_game' , :spot => 6
-    post '/play_game' , :spot => 7
-    post '/play_game' , :spot => 8
-    expect(last_response.body.include?('Won')).to eq true
-  end
-
-  xit "Tied game goes to tied end game screen" do
-    post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "Human", :player_two_type => "Human", :first_player => "player_one_marker"
-    post '/play_game' , :spot => 0
-    post '/play_game' , :spot => 2
-    post '/play_game' , :spot => 1
-    post '/play_game' , :spot => 4
-    post '/play_game' , :spot => 5
-    post '/play_game' , :spot => 3
-    post '/play_game' , :spot => 6
-    post '/play_game' , :spot => 7
-    post '/play_game' , :spot => 8
-    expect(last_response.body.include?('Tied')).to eq true
-  end
 
 end

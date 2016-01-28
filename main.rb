@@ -2,34 +2,14 @@ require 'sinatra'
 require_relative 'tictactoe/tic_tac_toe_board.rb'
 require_relative 'tictactoe/tic_tac_toe_rules.rb'
 require_relative 'tictactoe/tic_tac_toe_ai.rb'
-require_relative 'models/game.rb'
+require_relative 'lib/game.rb'
+require_relative 'lib/datamapper_resource_dirty_module.rb'
 require 'sinatra/formkeeper'
 require 'data_mapper'
 
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
 DataMapper.auto_upgrade!
 DataMapper.finalize
-
-#Below code was found on Stack Overflow to make it so an Object property properly updates.
-#http://stackoverflow.com/questions/18698331/updating-object-property-in-datamappers
-module DataMapper
-  module Resource
-    def make_dirty(*attributes)
-      if attributes.empty?
-        return
-      end
-      unless self.clean?
-        self.save
-      end
-      dirty_state = DataMapper::Resource::PersistenceState::Dirty.new(self)
-      attributes.each do |attribute|
-        property = self.class.properties[attribute]
-        dirty_state.original_attributes[property] = nil
-        self.persistence_state = dirty_state
-      end
-    end
-  end
-end
 
 get '/' do
 	@title = 'Home'
