@@ -27,7 +27,7 @@ describe TicTacToeAi do
 
     xit "#best_move chooses winning move" do
       win_board = TicTacToeBoard.new(board: ["O", "O", "2", "O", "4", "5", "6", "7", "8"])
-      expect(ai_player.move(win_board, @player_turn)).to eq 5
+      expect(ai_player.move(win_board, @player_turn)).to eq 2
     end
 
     xit "#best_move chooses winning move" do

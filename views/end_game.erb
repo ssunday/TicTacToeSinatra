@@ -5,10 +5,10 @@
 </head>
 <body>
 	<header>
-  <% if @game.game_rules.player_one_won? %>
+  <% if @game_rules.player_one_won? %>
 			<% @game.end_game_state = "Player One Won" %>
       <h1> Player One has Won! </h1>
-  <% elsif @game.game_rules.player_two_won? %>
+  <% elsif @game_rules.player_two_won? %>
 			<% @game.end_game_state = "Player Two Won" %>
       <h1> Player Two has Won! </h1>
   <% else %>
@@ -20,6 +20,7 @@
   <br>
 	<h2> Thanks for playing!</h2> <br>
   <h2> <a href="/settings"> To play again, click here. </a> </h2>
+	<br>
 	<h2> <a href="/previous_games"> To see previous games, click here. </a> </h2>
 </body>
 </html>

@@ -3,12 +3,11 @@ require_relative 'tictactoe/tic_tac_toe_board.rb'
 require_relative 'tictactoe/tic_tac_toe_rules.rb'
 require_relative 'tictactoe/tic_tac_toe_ai.rb'
 require_relative 'lib/game.rb'
-require_relative 'lib/datamapper_resource_dirty_module.rb'
 require 'sinatra/formkeeper'
 require 'data_mapper'
 
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-DataMapper.auto_migrate!
+DataMapper.auto_upgrade!
 DataMapper.finalize
 
 get '/' do
@@ -43,11 +42,9 @@ post '/settings' do
     @game.player_two_marker = params[:player_two_marker]
 
 		if params[:first_player].eql?("player_one_marker")
-			@game.current_player = params[:player_one_marker]
-			first_player = params[:player_one_marker]
+			@game.player_turn = params[:player_one_marker]
 		else
-			@game.current_player = params[:player_two_marker]
-			first_player = params[:player_two_marker]
+			@game.player_turn = params[:player_two_marker]
 		end
 
 		if params[:player_one_type].eql?("AI")
@@ -61,8 +58,9 @@ post '/settings' do
 		else
 			@game.player_two_ai = false
 		end
-
-		@game.game_rules = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: params[:player_one_marker], player_two: params[:player_two_marker])
+		game_board = TicTacToeBoard.new
+		@game.game_board = game_board.board
+		@game_rules = TicTacToeRules.new(game_board, first_player: @game.player_turn , player_one: params[:player_one_marker], player_two: params[:player_two_marker])
     @game.save
 		erb :play_game
   end
@@ -71,30 +69,30 @@ end
 get '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:id])
+	current_board = TicTacToeBoard.new(board: Array.new(@game.game_board))
+	@game_rules = TicTacToeRules.new(current_board, first_player: @game.player_turn, player_one: @game.player_one_marker, player_two: @game.player_two_marker)
 	erb :play_game
 end
 
 post '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:game_id])
-	current_board = TicTacToeBoard.new(board: Array.new(@game.game_rules.get_array_board.dup))
-	if @game.game_rules.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai
+	current_board = TicTacToeBoard.new(board: Array.new(@game.game_board))
+	@game_rules = TicTacToeRules.new(current_board, first_player: @game.player_turn, player_one: @game.player_one_marker, player_two: @game.player_two_marker)
+	if @game.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai
 		player_one_ai = TicTacToeAi.new(ai_marker: @game.player_one_marker, other_player_marker: @game.player_two_marker)
 		location_chosen = player_one_ai.move(current_board, @game.player_one_marker)
-	elsif @game.game_rules.player_turn.eql?(@game.player_two_marker) && @game.player_two_ai
+	elsif @game.player_turn.eql?(@game.player_two_marker) && @game.player_two_ai
 		player_two_ai = TicTacToeAi.new(ai_marker: @game.player_two_marker, other_player_marker: @game.player_one_marker)
 		location_chosen = player_two_ai.move(current_board, @game.player_two_marker)
 	else
-		if params[:spot] == nil
-			redirect back
-		else
-			location_chosen = params[:spot].to_i
-		end
+		location_chosen = params[:spot].to_i
 	end
-  @game.game_rules.game_turn(location_chosen)
-  @game.make_dirty(:game_rules)
+  @game_rules.game_turn(location_chosen)
+	@game.game_board = @game_rules.get_array_board
+	@game.player_turn = @game_rules.player_turn
   @game.save
-  if @game.game_rules.game_over?
+  if @game_rules.game_over?
     @title = "Game Over"
     @game.previous_or_active = "Previous"
     @game.save
