@@ -7,8 +7,8 @@
     <h1> It is Player Two's Turn. Marker: <%= @game.player_two_marker %> </h1>
   <% end %>
 
-  <% if (@game.player_one_ai != nil && @game.game_rules.player_turn.eql?(@game.player_one_marker)) \
-    || (@game.player_two_ai  != nil && @game.game_rules.player_turn.eql?(@game.player_two_marker))%>
+  <% if (@game.player_one_ai && @game.game_rules.player_turn.eql?(@game.player_one_marker)) \
+    || (@game.player_two_ai && @game.game_rules.player_turn.eql?(@game.player_two_marker))%>
     <% player_turn = false %>
     <h1> AI Turn </h1>
   <% else%>
@@ -52,7 +52,7 @@
     </td>
     <td style="padding:0 15px 0 15px;">
       <%if @game.game_rules.location_valid_to_mark?(4) && player_turn%>
-        <input type="radio" name="spot" value="4">
+        <input type="radio" name="spot" value="4" checked>
       <%else%>
         <%= @game.game_rules.get_location_value(4) %>
       <%end%>
