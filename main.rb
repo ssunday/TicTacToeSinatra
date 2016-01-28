@@ -68,11 +68,11 @@ post '/settings' do
     @game = Game.last(:previous_or_active => "Active")
     erb :settings
   else
-    game = Game.new
-    game.previous_or_active = "Active"
+    @game = Game.new
+    @game.previous_or_active = "Active"
 
-    game.player_one_marker = params[:player_one_marker]
-    game.player_two_marker = params[:player_two_marker]
+    @game.player_one_marker = params[:player_one_marker]
+    @game.player_two_marker = params[:player_two_marker]
 
 		if params[:first_player].eql?("player_one_marker")
 			first_player = params[:player_one_marker]
@@ -81,36 +81,32 @@ post '/settings' do
 		end
 
 		if params[:player_one_type].eql?("AI")
-			game.player_one_ai = TicTacToeAi.new(ai_marker: params[:player_one_marker], other_player_marker: params[:player_two_marker])
+			@game.player_one_ai = TicTacToeAi.new(ai_marker: params[:player_one_marker], other_player_marker: params[:player_two_marker])
 		else
-			game.player_one_ai = nil
+			@game.player_one_ai = nil
 		end
 
 		if params[:player_two_type].eql?("AI")
-			game.player_two_ai = TicTacToeAi.new(ai_marker: params[:player_two_marker], other_player_marker: params[:player_one_marker])
+			@game.player_two_ai = TicTacToeAi.new(ai_marker: params[:player_two_marker], other_player_marker: params[:player_one_marker])
 		else
-			game.player_two_ai = nil
+			@game.player_two_ai = nil
 		end
 
-		game.game_rules = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: params[:player_one_marker], player_two: params[:player_two_marker])
-    game.save
-		redirect '/play_game'
+		@game.game_rules = TicTacToeRules.new(TicTacToeBoard.new, first_player: first_player , player_one: params[:player_one_marker], player_two: params[:player_two_marker])
+    @game.save
+		erb :play_game
   end
 end
 
 get '/play_game' do
-	@title = "Game"
-  @game = Game.last(:previous_or_active => "Active")
-	if @game.game_rules.game_over?
-		redirect '/end_game'
-		return nil
-	end
+	@title = "Play Game"
+  @game = Game.get(params[:id])
 	erb :play_game
 end
 
 post '/play_game' do
 	@title = "Play Game"
-  @game = Game.last(:previous_or_active => "Active")
+  @game = Game.get(params[:game_id])
 	current_board = TicTacToeBoard.new(board: Array.new(@game.game_rules.get_array_board.dup))
 	if @game.game_rules.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai != nil
 		location_chosen = @game.player_one_ai.move(current_board, @game.player_one_marker)
@@ -118,7 +114,7 @@ post '/play_game' do
 		location_chosen = @game.player_two_ai.move(current_board, @game.player_two_marker)
 	else
 		if params[:spot] == nil
-			redirect to('/play_game')
+			redirect back
 		else
 			location_chosen = params[:spot].to_i
 		end
@@ -126,21 +122,21 @@ post '/play_game' do
   @game.game_rules.game_turn(location_chosen)
   @game.make_dirty(:game_rules)
   @game.save
-	redirect to('/play_game')
+  if @game.game_rules.game_over?
+    @title = "Game Over"
+    @game.previous_or_active = "Previous"
+    @game.save
+    erb :end_game
+  else
+    erb :play_game
+  end
 end
 
 get '/previous_games' do
-  @title = "Previouss"
+  @title = "Previous Games"
+  @unfinished_games = Game.all(:previous_or_active => "Active")
   @previous_games = Game.all(:previous_or_active => "Previous")
   erb :previous_games
-end
-
-get '/end_game' do
-	@title = "Game Over"
-  @game = Game.last(:previous_or_active => "Active")
-  @game.previous_or_active = "Previous"
-  @game.save
-	erb :end_game
 end
 
 not_found do

@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en">
 <body>
-
-  <% if @game.game_rules.player_turn == @game.player_one_marker%>
+  <% if @game.game_rules.player_turn.eql?(@game.player_one_marker)%>
     <h1> It is Player One's Turn. Marker: <%= @game.player_one_marker %></h1>
   <% else %>
     <h1> It is Player Two's Turn. Marker: <%= @game.player_two_marker %> </h1>
@@ -91,7 +90,7 @@
   </tr>
   </table>
   <br>
-  <label> Next turn! </label> <input type="submit">
+  <button name="game_id" type="submit" value="<%= @game.id %>">Next Turn</button>
 </form>
 </body>
 </html>
