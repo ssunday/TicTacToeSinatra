@@ -2,23 +2,11 @@ require 'sinatra'
 require_relative 'tictactoe/tic_tac_toe_board.rb'
 require_relative 'tictactoe/tic_tac_toe_rules.rb'
 require_relative 'tictactoe/tic_tac_toe_ai.rb'
+require_relative 'models/game.rb'
 require 'sinatra/formkeeper'
 require 'data_mapper'
 
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-
-class Game
-  include DataMapper::Resource
-  property :id, Serial
-  property :player_one_marker, String
-  property :player_two_marker, String
-	property :player_one_ai, Object, :required => false
-	property :player_two_ai, Object, :required => false
-	property :game_rules, Object
-  property :previous_or_active, String
-  property :end_game_state, String, :required => false
-end
-
 DataMapper.auto_upgrade!
 DataMapper.finalize
 
