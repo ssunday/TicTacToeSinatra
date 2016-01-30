@@ -7,7 +7,7 @@ require 'sinatra/formkeeper'
 require 'data_mapper'
 
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-DataMapper.auto_upgrade!
+DataMapper.auto_migrate!
 DataMapper.finalize
 
 get '/' do
@@ -32,11 +32,11 @@ post '/settings' do
   @duplicated = params[:player_one_marker].eql?(params[:player_two_marker])
 
 	if form.failed? || @duplicated
-    @game = Game.last(:previous_or_active => "Active")
+    @game = Game.last(:active => true)
     erb :settings
   else
     @game = Game.new
-    @game.previous_or_active = "Active"
+    @game.active = true
 
     @game.player_one_marker = params[:player_one_marker]
     @game.player_two_marker = params[:player_two_marker]
@@ -94,7 +94,7 @@ post '/play_game' do
   @game.save
   if @game_rules.game_over?
     @title = "Game Over"
-    @game.previous_or_active = "Previous"
+    @game.active = false
     @game.save
     erb :end_game
   else
@@ -104,8 +104,8 @@ end
 
 get '/previous_games' do
   @title = "Previous Games"
-  @unfinished_games = Game.all(:previous_or_active => "Active")
-  @previous_games = Game.all(:previous_or_active => "Previous")
+  @unfinished_games = Game.all(:active => true)
+  @previous_games = Game.all(:active => false)
   erb :previous_games
 end
 
