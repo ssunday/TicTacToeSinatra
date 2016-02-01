@@ -25,7 +25,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response).to be_ok
     end
 
-    xit "the previous games page" do
+    it "the previous games page" do
       get '/previous_games'
       expect(last_response).to be_ok
     end
@@ -34,7 +34,7 @@ describe "Tic Tac Toe Web App" do
 
   describe "Settings" do
 
-    it "can post" do
+    it "can post with default input" do
       post '/settings'
       expect(last_response).to be_ok
     end
@@ -44,12 +44,11 @@ describe "Tic Tac Toe Web App" do
       expect(last_response.redirect?).to eq false
     end
 
+    it "posts to play_game with input" do
+      post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "AI", :player_two_type => "AI", :first_player => "player_one_marker"
+      expect(last_response).to be_ok
+    end
+    
   end
-
-  it "Settings goes to play_game" do
-    post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "AI", :player_two_type => "AI", :first_player => "player_one_marker"
-    expect(last_response).to be_ok
-  end
-
 
 end
