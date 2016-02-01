@@ -1,4 +1,4 @@
-require File.expand_path '../../tictactoe/tic_tac_toe_board.rb', __FILE__
+require File.expand_path '../../lib/tic_tac_toe_board.rb', __FILE__
 
 describe TicTacToeBoard do
 

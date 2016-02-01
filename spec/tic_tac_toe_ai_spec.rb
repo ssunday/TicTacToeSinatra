@@ -1,5 +1,5 @@
-require File.expand_path '../../tictactoe/tic_tac_toe_ai.rb', __FILE__
-require File.expand_path '../../tictactoe/tic_tac_toe_board.rb', __FILE__
+require File.expand_path '../../lib/tic_tac_toe_ai.rb', __FILE__
+require File.expand_path '../../lib/tic_tac_toe_board.rb', __FILE__
 
 describe TicTacToeAi do
   attr_reader :ai_player, :board, :player_turn
