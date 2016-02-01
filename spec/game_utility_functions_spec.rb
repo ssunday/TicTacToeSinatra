@@ -1,10 +1,10 @@
 require 'rspec'
-require 'setup'
+require 'game_utility_functions'
 require 'game'
-include GameSetup
+include GameUtilityFunctions
 
 describe "Tic Tac Toe Game Setup Module" do
-  
+
   describe "#set_up_game" do
 
     before do

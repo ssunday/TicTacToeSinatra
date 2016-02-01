@@ -4,9 +4,9 @@ require 'data_mapper'
 require_relative 'lib/tic_tac_toe_rules.rb'
 require_relative 'lib/tic_tac_toe_ai.rb'
 require_relative 'lib/game.rb'
-require_relative 'lib/setup.rb'
+require_relative 'lib/game_utility_functions.rb'
 
-include GameSetup
+include GameUtilityFunctions
 
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
 DataMapper.auto_upgrade!
@@ -58,15 +58,7 @@ post '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:game_id])
 	@game_rules = create_new_game_rules(@game)
-	if @game.player_turn.eql?(@game.player_one_marker) && @game.player_one_ai
-		player_one_ai = TicTacToeAi.new(ai_marker: @game.player_one_marker, other_player_marker: @game.player_two_marker)
-		location_chosen = player_one_ai.move(@game_rules.get_board, @game.player_one_marker)
-	elsif @game.player_turn.eql?(@game.player_two_marker) && @game.player_two_ai
-		player_two_ai = TicTacToeAi.new(ai_marker: @game.player_two_marker, other_player_marker: @game.player_one_marker)
-		location_chosen = player_two_ai.move(@game_rules.get_board, @game.player_two_marker)
-	else
-		location_chosen = params[:spot].to_i
-	end
+	location_chosen = get_location_chosen(@game, params[:spot])
   @game_rules.game_turn(location_chosen)
 	@game.game_board = @game_rules.get_array_board
 	@game.player_turn = @game_rules.player_turn

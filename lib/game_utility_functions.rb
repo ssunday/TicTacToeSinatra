@@ -1,7 +1,8 @@
 require_relative 'tic_tac_toe_board.rb'
 require_relative 'tic_tac_toe_rules.rb'
 require_relative 'tic_tac_toe_ai.rb'
-module GameSetup
+
+module GameUtilityFunctions
 
   def set_up_game(params = {})
     game = params[:game]
@@ -37,5 +38,18 @@ module GameSetup
 		current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
 		TicTacToeRules.new(current_board, first_player: game.player_turn, player_one: game.player_one_marker, player_two: game.player_two_marker)
 	end
+
+  def get_location_chosen(game, spot)
+    current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
+    if game.player_turn.eql?(game.player_one_marker) && game.player_one_ai
+  		player_one_ai = TicTacToeAi.new(ai_marker: game.player_one_marker, other_player_marker: game.player_two_marker)
+  		player_one_ai.move(current_board, game.player_one_marker)
+  	elsif game.player_turn.eql?(game.player_two_marker) && game.player_two_ai
+  		player_two_ai = TicTacToeAi.new(ai_marker: game.player_two_marker, other_player_marker: game.player_one_marker)
+  		player_two_ai.move(current_board, game.player_two_marker)
+  	else
+  		spot.to_i
+  	end
+  end
 
 end
