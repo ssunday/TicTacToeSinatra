@@ -4,7 +4,7 @@
 <% @unfinished_games.each do |unfinished_game| %>
   <br>
   <form action="/play_game" method="get">
-  <button name="id" type="submit" value="<%= unfinished_game.id %>">Resume Game</button>
+  <button name="game_id" type="submit" value="<%=unfinished_game.id%>">Resume Game</button>
   </form>
   <h2> Player One Marker: <%= unfinished_game.player_one_marker %> </h2>
   <h2> Player Two Marker: <%= unfinished_game.player_two_marker %> </h2>

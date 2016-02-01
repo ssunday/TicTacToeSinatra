@@ -1,3 +1,6 @@
+require_relative 'tic_tac_toe_board.rb'
+require_relative 'tic_tac_toe_rules.rb'
+require_relative 'tic_tac_toe_ai.rb'
 module GameSetup
 
   def set_up_game(params = {})
@@ -24,8 +27,15 @@ module GameSetup
 		else
 			game.player_two_ai = false
 		end
+    game_board = TicTacToeBoard.new
+		game.game_board = game_board.board
     game.save
-    return game
+    game
   end
+
+  def create_new_game_rules(game)
+		current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
+		TicTacToeRules.new(current_board, first_player: game.player_turn, player_one: game.player_one_marker, player_two: game.player_two_marker)
+	end
 
 end

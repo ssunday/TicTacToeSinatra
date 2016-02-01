@@ -17,6 +17,10 @@ class TicTacToeRules
     switch_turn
   end
 
+  def get_board
+    @board
+  end
+
   def get_array_board
     @board.board
   end

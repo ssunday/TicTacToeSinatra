@@ -25,7 +25,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response).to be_ok
     end
 
-    it "the previous games page" do
+    xit "the previous games page" do
       get '/previous_games'
       expect(last_response).to be_ok
     end
