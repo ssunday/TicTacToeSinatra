@@ -63,4 +63,20 @@ describe "Tic Tac Toe Game Setup Module" do
       expect(location_chosen).to eq 0
     end
   end
+
+  describe "#game_turn" do
+    it "correctly plays a turn with AI going" do
+      game_rules = create_new_game_rules(@game)
+      @game = game_turn(@game, game_rules, nil)
+      expect(@game.game_board).to eq ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
+    end
+
+    it "correctly plays a turn with player going" do
+      @game.player_turn = @player_two_marker
+      game_rules = create_new_game_rules(@game)
+      @game = game_turn(@game, game_rules, 4)
+      expect(@game.game_board).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
+    end
+  end
+
 end
