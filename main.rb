@@ -58,18 +58,13 @@ post '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:game_id])
 	@game_rules = create_new_game_rules(@game)
-	location_chosen = get_location_chosen(@game, params[:spot])
-  @game_rules.game_turn(location_chosen)
-	@game.game_board = @game_rules.get_array_board
-	@game.player_turn = @game_rules.player_turn
-  @game.save
-  if @game_rules.game_over?
-    @title = "Game Over"
-    @game.active = false
-    @game.save
-    erb :end_game
-  else
+	@game = game_turn(@game, @game_rules, params[:spot])
+	@game.save
+	@game_rules = create_new_game_rules(@game)
+  if @game.active
     erb :play_game
+  else
+    erb :end_game
   end
 end
 

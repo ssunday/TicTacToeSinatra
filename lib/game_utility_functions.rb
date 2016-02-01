@@ -52,4 +52,16 @@ module GameUtilityFunctions
   	end
   end
 
+  def game_turn(game, game_rules, spot)
+  	location_chosen = get_location_chosen(game, spot)
+    game_rules.game_turn(location_chosen)
+  	game.game_board = game_rules.get_array_board
+  	game.player_turn = game_rules.player_turn
+    if game_rules.game_over?
+      game.active = false
+    end
+    game.save
+    game
+  end
+
 end
