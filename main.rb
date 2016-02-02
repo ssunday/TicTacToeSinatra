@@ -22,7 +22,6 @@ end
 
 get '/settings' do
   @title = "Game Settings"
-  @duplicated = false
   erb :settings
 end
 
@@ -60,11 +59,11 @@ post '/play_game' do
 	game_rules = create_new_game_rules(game)
 	game = game_turn(game, game_rules, params[:spot])
 	game.save
-	game_rules = create_new_game_rules(game)
   if game.active
 		@view = PlayGamePage.new(game)
     erb :play_game
   else
+		game_rules = create_new_game_rules(game)
 		game = assign_end_game_state(game, game_rules)
 		game.save
 		@view = EndGamePage.new(game_rules)
@@ -79,6 +78,6 @@ get '/previous_games' do
 end
 
 not_found do
-	@title = "Not found!"
+	@title = "Not Found!"
   erb :not_found
 end
