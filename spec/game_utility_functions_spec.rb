@@ -5,6 +5,28 @@ include GameUtilityFunctions
 
 describe "Tic Tac Toe Game Setup Module" do
 
+  def win_game_player_one
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 0)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 1)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 3)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 4)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 6)
+  end
+
+  def win_game_player_two
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 0)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 1)
+    game_rules = create_new_game_rules(@game)
+    @game = game_turn(@game, game_rules, 2)
+  end
+
   before do
     @game = Game.new
     @player_one_marker = "X"
@@ -77,6 +99,25 @@ describe "Tic Tac Toe Game Setup Module" do
       @game = game_turn(@game, game_rules, 4)
       expect(@game.game_board).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
     end
+  end
+
+  describe "#assign_end_game_state" do
+
+    it "assigns player one win as a player one win" do
+      game_rules = create_new_game_rules(@game)
+      expect(@game.end_game_state).to eq "Player One Won"
+    end
+
+    it "assigns player two win as a player two win" do
+      game_rules = create_new_game_rules(@game)
+      expect(@game.end_game_state).to eq "Player Two Won"
+    end
+
+    it "assigns tied as tied" do
+      game_rules = create_new_game_rules(@game)
+      expect(@game.end_game_state).to eq "Tied"
+    end
+
   end
 
 end

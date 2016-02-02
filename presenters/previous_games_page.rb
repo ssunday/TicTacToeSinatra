@@ -1,5 +1,5 @@
 class PreviousGamesPage
-  
+
   def initialize(previous_games, unfinished_games)
     @previous_games = previous_games
     @unfinished_games = unfinished_games
@@ -16,42 +16,8 @@ class PreviousGamesPage
         <h2> Player One Marker: #{unfinished_game.player_one_marker } </h2>
         <h2> Player Two Marker: #{unfinished_game.player_two_marker } </h2>
         <br>
-      <table>
-        <tr>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[0] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[1] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[2] }
-          </td>
-        </tr>
-        <tr>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[3] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[4] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[5] }
-          </td>
-        </tr>
-        <tr>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[6] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[7] }
-          </td>
-          <td style='padding:0 15px 0 15px;'>
-          #{unfinished_game.game_board[8]}
-          </td>
-        </tr>
-      </table>
-      "
+        "
+      boards += show_board(unfinished_game)
       end
       boards
     end
@@ -63,44 +29,50 @@ class PreviousGamesPage
         <br>
         <h2> #{previous_game.end_game_state} </h2>
         <br>
-        <table>
-        <tr>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[0]}
-          </td>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[1]}
-          </td>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[2]}
-          </td>
-        </tr>
-        <tr>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[3]}
-          </td>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[4]}
-          </td>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[5]}
-          </td>
-        </tr>
-        <tr>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[6]}
-          </td>
-          <td style= 'padding: 0 15px 0 15px';>
-          #{previous_game.game_board[7]}
-          </td>
-          <td style='padding: 0 15px 0 15px;'>
-          #{previous_game.game_board[8]}
-          </td>
-        </tr>
-        </table>
         "
+        string_to_show += show_board(previous_game)
       end
     string_to_show
+  end
+
+  def show_board(game)
+    "
+    <table>
+    <tr>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[0]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[1]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[2]}
+      </td>
+    </tr>
+    <tr>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[3]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[4]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[5]}
+      </td>
+    </tr>
+    <tr>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[6]}
+      </td>
+      <td style= 'padding: 0 15px 0 15px';>
+      #{game.game_board[7]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[8]}
+      </td>
+    </tr>
+    </table>
+    "
   end
 
 end

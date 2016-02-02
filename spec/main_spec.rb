@@ -45,10 +45,9 @@ describe "Tic Tac Toe Web App" do
     end
 
     it "posts to play_game with input" do
-      post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "AI", :player_two_type => "AI", :first_player => "player_one_marker"
+      post '/settings', :player_one_marker => "X", :player_two_marker => "O", :player_one_type => "AI", :player_two_type => "AI", :first_player => "player_one_marker")
       expect(last_response).to be_ok
     end
-    
   end
 
 end

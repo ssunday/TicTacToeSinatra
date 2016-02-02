@@ -34,16 +34,16 @@ post '/settings' do
 	end
 
 	if form.failed? || params[:player_one_marker].eql?(params[:player_two_marker])
-    redirect back
-  end
-
-  game = Game.new
-	game = set_up_game(game: game, player_one_marker: params[:player_one_marker], \
-	player_two_marker: params[:player_two_marker],\
-	first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
-	game.save
-	@view = PlayGamePage.new(game)
-	erb :play_game
+    erb :settings
+	else
+	  game = Game.new
+		game = set_up_game(game: game, player_one_marker: params[:player_one_marker], \
+		player_two_marker: params[:player_two_marker],\
+		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
+		game.save
+		@view = PlayGamePage.new(game)
+		erb :play_game
+	end
 end
 
 get '/play_game' do

@@ -31,24 +31,58 @@ class PlayGamePage
 
   def show_active_board
     board = ""
-    board += "<table>
-    <form action='/play_game' method='post'>"
+    board += start_form
     for i in 0..8 do
-      if i % 3 == 0 || i == 0
-        board += "<tr>"
-      end
-      board += "<td style='padding:0 15px 0 15px;'>"
-      if @game.game_board[i] != @game.player_one_marker && @game.game_board[i] != @game.player_two_marker && human_player_turn?
-        board += "<input type='radio' name='spot' value='#{i}' checked>"
-      else
-        board += "#{@game.game_board[i]}"
-      end
-      board += "</td>"
-      if i == 2 || i == 5 || i == 8
-        board += "</tr>"
-      end
+      board += begin_table_row(i)
+      board += begin_cell
+      board += show_cell_value_or_input(i)
+      board += end_cell
+      board += end_table_row(i)
     end
-    board += "</table>
+    board += add_submit_button
+    board
+  end
+
+  private
+
+  def start_form
+    "<table><form action='/play_game' method='post'>"
+  end
+
+  def begin_table_row(cell_number)
+    if cell_number % 3 == 0 || cell_number == 0
+      "<tr>"
+    else
+      ""
+    end
+  end
+
+  def begin_cell
+    "<td style='padding:0 15px 0 15px;'>"
+  end
+
+  def show_cell_value_or_input(cell_number)
+    if @game.game_board[cell_number] != @game.player_one_marker && @game.game_board[cell_number] != @game.player_two_marker && human_player_turn?
+      "<input type='radio' name='spot' value='#{cell_number}' checked>"
+    else
+      "#{@game.game_board[cell_number]}"
+    end
+  end
+
+  def end_cell
+    "</td>"
+  end
+
+  def end_table_row(cell_number)
+    if cell_number == 2 || cell_number == 5 || cell_number == 8
+      "</tr>"
+    else
+      ""
+    end
+  end
+
+  def add_submit_button
+    "</table>
       <br>
       <button name='game_id' type='submit' value='#{@game.id}'>Next Turn</button>
     </form>"
