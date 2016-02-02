@@ -1,6 +1,7 @@
 require 'rspec'
 require 'game_utility_functions'
 require 'game'
+
 include GameUtilityFunctions
 
 describe "Tic Tac Toe Game Setup Module" do

@@ -66,7 +66,7 @@ post '/play_game' do
 		game_rules = create_new_game_rules(game)
 		game = assign_end_game_state(game, game_rules)
 		game.save
-		@view = EndGamePage.new(game_rules)
+		@view = EndGamePage.new(game)
     erb :end_game
   end
 end
