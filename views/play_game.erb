@@ -1,41 +1,28 @@
 <!doctype html>
 <html lang="en">
 <body>
-  <% if @game.player_turn.eql?(@game.player_one_marker)%>
-    <h1> It is Player One's Turn. Marker: <%= @game.player_one_marker %></h1>
-  <% else %>
-    <h1> It is Player Two's Turn. Marker: <%= @game.player_two_marker %> </h1>
-  <% end %>
-
-  <% if (@game.player_one_ai && @game.player_turn.eql?(@game.player_one_marker)) \
-    || (@game.player_two_ai && @game.player_turn.eql?(@game.player_two_marker))%>
-    <% player_turn = false %>
-    <h1> AI Turn </h1>
-  <% else%>
-    <h2> Pick an open spot to mark. </h2>
-    <% player_turn = true %>
-  <%end%>
-
+  <h1> <%= @view.report_player_turn_and_marker %> </h1>
+  <h1> <%= @view.report_whether_AI_or_player_turn %> </h1>
   <br>
   <table>
   <form action="/play_game" method="post">
   <tr>
     <td style="padding:0 15px 0 15px;">
-      <% if @game_rules.location_valid_to_mark?(0) && player_turn%>
+      <% if @game_rules.location_valid_to_mark?(0) && @view.human_player_turn?%>
         <input type="radio" name="spot" value="0" checked>
       <% else%>
         <%= @game_rules.get_location_value(0) %>
       <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-    <%if @game_rules.location_valid_to_mark?(1) && player_turn%>
+    <%if @game_rules.location_valid_to_mark?(1) && @view.human_player_turn?%>
       <input type="radio" name="spot" value="1" checked>
     <%else%>
       <%= @game_rules.get_location_value(1) %>
     <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(2) && player_turn%>
+      <%if @game_rules.location_valid_to_mark?(2) && @view.human_player_turn?%>
         <input type="radio" name="spot" value="2" checked>
       <%else%>
         <%= @game_rules.get_location_value(2) %>
@@ -44,21 +31,21 @@
   </tr>
   <tr>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(3) && player_turn%>
+      <%if @game_rules.location_valid_to_mark?(3) && @view.human_player_turn?%>
         <input type="radio" name="spot" value="3" checked>
       <%else%>
         <%= @game_rules.get_location_value(3) %>
       <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(4) && player_turn%>
+      <%if @game_rules.location_valid_to_mark?(4) && @view.human_player_turn?%>
         <input type="radio" name="spot" value="4" checked>
       <%else%>
         <%= @game_rules.get_location_value(4) %>
       <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(5) && player_turn %>
+      <%if @game_rules.location_valid_to_mark?(5) && @view.human_player_turn? %>
         <input type="radio" name="spot" value="5" checked>
       <%else%>
         <%= @game_rules.get_location_value(5) %>
@@ -67,21 +54,21 @@
   </tr>
   <tr>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(6) && player_turn %>
+      <%if @game_rules.location_valid_to_mark?(6) && @view.human_player_turn? %>
         <input type="radio" name="spot" value="6" checked>
       <%else%>
         <%= @game_rules.get_location_value(6) %>
       <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(7) && player_turn %>
+      <%if @game_rules.location_valid_to_mark?(7) && @view.human_player_turn? %>
         <input type="radio" name="spot" value="7" checked>
       <%else%>
         <%= @game_rules.get_location_value(7) %>
       <%end%>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <%if @game_rules.location_valid_to_mark?(8) && player_turn %>
+      <%if @game_rules.location_valid_to_mark?(8) && @view.human_player_turn? %>
         <input type="radio" name="spot" value="8" checked>
       <%else%>
         <%= @game_rules.get_location_value(8) %>

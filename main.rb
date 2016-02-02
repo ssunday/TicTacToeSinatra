@@ -5,6 +5,7 @@ require_relative 'lib/tic_tac_toe_rules.rb'
 require_relative 'lib/tic_tac_toe_ai.rb'
 require_relative 'lib/game.rb'
 require_relative 'lib/game_utility_functions.rb'
+require_relative 'presenters/play_game_page.rb'
 
 include GameUtilityFunctions
 
@@ -43,6 +44,7 @@ post '/settings' do
 		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
 		@game.save
 		@game_rules = create_new_game_rules(@game)
+		@view = PlayGamePage.new(@game)
 		erb :play_game
   end
 end
@@ -50,6 +52,7 @@ end
 get '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:game_id])
+	@view = PlayGamePage.new(@game)
 	@game_rules = create_new_game_rules(@game)
 	erb :play_game
 end
@@ -62,6 +65,7 @@ post '/play_game' do
 	@game.save
 	@game_rules = create_new_game_rules(@game)
   if @game.active
+		@view = PlayGamePage.new(@game)
     erb :play_game
   else
     erb :end_game
