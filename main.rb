@@ -7,6 +7,7 @@ require_relative 'lib/game.rb'
 require_relative 'lib/game_utility_functions.rb'
 require_relative 'presenters/play_game_page.rb'
 require_relative 'presenters/previous_games_page.rb'
+require_relative 'presenters/end_game_page.rb'
 
 include GameUtilityFunctions
 
@@ -33,42 +34,40 @@ post '/settings' do
 		field :player_two_marker, :present => true, :length => 1, :int => false
 	end
 
-  @duplicated = params[:player_one_marker].eql?(params[:player_two_marker])
-
-	if form.failed? || @duplicated
-    @game = Game.last(:active => true)
-    erb :settings
-  else
-    @game = Game.new
-		@game = set_up_game(game: @game, player_one_marker: params[:player_one_marker], \
-		player_two_marker: params[:player_two_marker],\
-		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
-		@game.save
-		@game_rules = create_new_game_rules(@game)
-		@view = PlayGamePage.new(@game)
-		erb :play_game
+	if form.failed? || params[:player_one_marker].eql?(params[:player_two_marker])
+    redirect back
   end
+
+  game = Game.new
+	game = set_up_game(game: game, player_one_marker: params[:player_one_marker], \
+	player_two_marker: params[:player_two_marker],\
+	first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
+	game.save
+	@view = PlayGamePage.new(game)
+	erb :play_game
 end
 
 get '/play_game' do
 	@title = "Play Game"
-  @game = Game.get(params[:game_id])
-	@game_rules = create_new_game_rules(@game)
-	@view = PlayGamePage.new(@game)
+  game = Game.get(params[:game_id])
+	@view = PlayGamePage.new(game)
 	erb :play_game
 end
 
 post '/play_game' do
 	@title = "Play Game"
-  @game = Game.get(params[:game_id])
-	@game_rules = create_new_game_rules(@game)
-	@game = game_turn(@game, @game_rules, params[:spot])
-	@game.save
-	@game_rules = create_new_game_rules(@game)
-  if @game.active
-		@view = PlayGamePage.new(@game)
+  game = Game.get(params[:game_id])
+	game_rules = create_new_game_rules(game)
+	game = game_turn(game, game_rules, params[:spot])
+	game.save
+	game_rules = create_new_game_rules(game)
+  if game.active
+		@view = PlayGamePage.new(game)
     erb :play_game
   else
+		game = assign_end_game_state(game, game_rules)
+		game.save
+		@view = EndGamePage.new(game_rules)
     erb :end_game
   end
 end

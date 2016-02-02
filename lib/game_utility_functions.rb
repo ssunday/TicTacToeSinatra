@@ -64,4 +64,16 @@ module GameUtilityFunctions
     game
   end
 
+  def assign_end_game_state(game, game_rules)
+    if game_rules.player_one_won?
+  			game.end_game_state = "Player One Won"
+    elsif game_rules.player_two_won?
+  			game.end_game_state = "Player Two Won"
+    else
+  			game.end_game_state = "Tied"
+    end
+  	game.save
+    game
+  end
+
 end

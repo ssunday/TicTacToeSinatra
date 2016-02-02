@@ -29,4 +29,29 @@ class PlayGamePage
     end
   end
 
+  def show_active_board
+    board = ""
+    board += "<table>
+    <form action='/play_game' method='post'>"
+    for i in 0..8 do
+      if i % 3 == 0 || i == 0
+        board += "<tr>"
+      end
+      board += "<td style='padding:0 15px 0 15px;'>"
+      if @game.game_board[i] != @game.player_one_marker && @game.game_board[i] != @game.player_two_marker && human_player_turn?
+        board += "<input type='radio' name='spot' value='#{i}' checked>"
+      else
+        board += "#{@game.game_board[i]}"
+      end
+      board += "</td>"
+      if i == 2 || i == 5 || i == 8
+        board += "</tr>"
+      end
+    end
+    board += "</table>
+      <br>
+      <button name='game_id' type='submit' value='#{@game.id}'>Next Turn</button>
+    </form>"
+  end
+
 end
