@@ -15,17 +15,17 @@ class PlayGamePage
 
   def report_whether_AI_or_player_turn
     if human_player_turn?
-      "Player Turn"
+      "<h1>Player Turn</h1>"
     else
-      "AI Turn"
+      "<h1>AI Turn</h1>"
     end
   end
 
   def report_player_turn_and_marker
     if @game.player_turn.eql?(@game.player_one_marker)
-      "It is Player One's Turn. Marker: #{@game.player_one_marker}"
+      "<h1>It is Player One's Turn. Marker: #{@game.player_one_marker}</h1>"
     else
-      "It is Player Two's Turn. Marker: #{@game.player_two_marker}"
+      "<h1>It is Player Two's Turn. Marker: #{@game.player_two_marker}</h1>"
     end
   end
 

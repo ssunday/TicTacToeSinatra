@@ -6,6 +6,7 @@ require_relative 'lib/tic_tac_toe_ai.rb'
 require_relative 'lib/game.rb'
 require_relative 'lib/game_utility_functions.rb'
 require_relative 'presenters/play_game_page.rb'
+require_relative 'presenters/previous_games_page.rb'
 
 include GameUtilityFunctions
 
@@ -52,8 +53,8 @@ end
 get '/play_game' do
 	@title = "Play Game"
   @game = Game.get(params[:game_id])
-	@view = PlayGamePage.new(@game)
 	@game_rules = create_new_game_rules(@game)
+	@view = PlayGamePage.new(@game)
 	erb :play_game
 end
 
@@ -74,8 +75,7 @@ end
 
 get '/previous_games' do
   @title = "Previous Games"
-  @unfinished_games = Game.all(:active => true)
-  @previous_games = Game.all(:active => false)
+	@view_previous = PreviousGamesPage.new(Game.all(:active => false), Game.all(:active => true))
   erb :previous_games
 end
 

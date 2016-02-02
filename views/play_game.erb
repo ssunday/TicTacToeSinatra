@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <body>
-  <h1> <%= @view.report_player_turn_and_marker %> </h1>
-  <h1> <%= @view.report_whether_AI_or_player_turn %> </h1>
+  <%= @view.report_player_turn_and_marker %>
+  <%= @view.report_whether_AI_or_player_turn %>
   <br>
   <table>
   <form action="/play_game" method="post">

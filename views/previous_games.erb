@@ -1,89 +1,9 @@
-<h1> <a href = '/'> To go back to home page, click here. </a> </h1>
-
+<!doctype html>
+<html lang="en">
+<h1> <a href='/'> To go back to home page, click here.</a> </h1>
 <h1> Unfinished Games </h1>
-<% @unfinished_games.each do |unfinished_game| %>
-  <br>
-  <form action="/play_game" method="get">
-  <button name="game_id" type="submit" value="<%=unfinished_game.id%>">Resume Game</button>
-  </form>
-  <h2> Player One Marker: <%= unfinished_game.player_one_marker %> </h2>
-  <h2> Player Two Marker: <%= unfinished_game.player_two_marker %> </h2>
-  <br>
-<table>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[0] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[1] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[2] %>
-    </td>
-  </tr>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[3] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[4] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[5] %>
-    </td>
-  </tr>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[6] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[7] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= unfinished_game.game_board[8] %>
-    </td>
-  </tr>
-</table>
-<% end %>
+<%= @view_previous.show_unfinished_games %>
 <br>
 <h1> Previous Games </h1>
-<% @previous_games.each do |previous_game| %>
-  <br>
-  <h2> <%= previous_game.end_game_state %> </h3>
-  <br>
-  <table>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[0] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[1] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[2] %>
-    </td>
-  </tr>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[3] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[4] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[5] %>
-    </td>
-  </tr>
-  <tr>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[6] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[7] %>
-    </td>
-    <td style="padding:0 15px 0 15px;">
-    <%= previous_game.game_board[8] %>
-    </td>
-  </tr>
-  </table>
-<% end %>
+<%= @view_previous.show_previous_games %>
+</html>
