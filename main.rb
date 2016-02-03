@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'sinatra/formkeeper'
 require 'data_mapper'
 require_relative 'lib/game.rb'
 require_relative 'lib/game_utility_functions.rb'
@@ -15,7 +14,6 @@ configure do
 	DataMapper.finalize
 end
 
-
 get '/' do
 	@title = 'Home'
 	erb :index
@@ -28,13 +26,7 @@ end
 
 post '/settings' do
 	@title = "Game Settings"
-
-	form do
-		field :player_one_marker, :present => true, :length => 1, :int => false
-		field :player_two_marker, :present => true, :length => 1, :int => false
-	end
-
-	if form.failed? || params[:player_one_marker].eql?(params[:player_two_marker])
+	if params[:player_one_marker].eql?(params[:player_two_marker])
     erb :settings
 	else
 	  game = Game.new
