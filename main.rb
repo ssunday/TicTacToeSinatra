@@ -8,6 +8,7 @@ require_relative 'presenters/previous_games_page.rb'
 require_relative 'presenters/end_game_page.rb'
 
 include GameUtilityFunctions
+
 configure do
 	DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
 	DataMapper.auto_upgrade!
