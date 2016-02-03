@@ -41,18 +41,4 @@ describe TicTacToeAi do
 
   end
 
-  context "AI is given the choice of blocking the opponent from winning or winning itself" do
-
-    xit "#best_move prioritizes winning" do
-      win_block_board = TicTacToeBoard.new(board: ["X", "X", "O", "O", "O", "5", "X", "O", "8"])
-      expect(ai_player.move(win_block_board, @player_turn)).to eq 5
-    end
-
-    xit "#best_move prioritizes winning" do
-      win_block_board = TicTacToeBoard.new(board: ["0", "1", "2", "X", "X", "5", "O", "O", "8"])
-      expect(ai_player.move(win_block_board, @player_turn)).to eq 8
-    end
-
-  end
-
 end

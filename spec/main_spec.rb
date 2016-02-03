@@ -125,4 +125,13 @@ describe "Tic Tac Toe Web App" do
       expect(last_response.body).to include("Tied")
     end
   end
+
+  describe "Previous Games" do
+
+    it "can see previous games" do
+      get '/previous_games'
+      expect(last_response.body).to include("#{@player_two_marker}")
+    end
+
+  end
 end
