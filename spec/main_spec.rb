@@ -38,12 +38,12 @@ describe "Tic Tac Toe Web App" do
 
   end
 
-  describe "Settings" do
+  before do
+    @player_one_marker = "X"
+    @player_two_marker = "O"
+  end
 
-    before do
-      @player_one_marker = "X"
-      @player_two_marker = "O"
-    end
+  describe "Settings" do
 
     it "can post with default input" do
       post '/settings'
@@ -71,9 +71,7 @@ describe "Tic Tac Toe Web App" do
 
   describe "Play game" do
 
-    before do
-      @player_one_marker = "X"
-      @player_two_marker = "O"
+    before(:each) do
       post '/settings', :player_one_marker => @player_one_marker, :player_two_marker => @player_two_marker, :player_one_type => "Human", :player_two_type => "Human", :first_player => "player_one_marker"
     end
 
@@ -84,49 +82,47 @@ describe "Tic Tac Toe Web App" do
 
     it "should post with player input" do
       follow_redirect!
-      post '/play_game', :game_id => 5, :spot => "0"
+      post '/play_game', :game_id => 4, :spot => "0"
       expect(last_response).to be_ok
     end
 
     it "should post with player input and switch to next turn" do
       follow_redirect!
-      post '/play_game', :game_id => 6, :spot => "0"
-      get '/play_game', :game_id => 6
+      post '/play_game', :game_id => 5, :spot => "0"
+      get '/play_game', :game_id => 5
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
     end
 
     it "should post with player input and show marked location" do
       follow_redirect!
-      post '/play_game', :game_id => 7, :spot => "0"
-      get '/play_game', :game_id => 7
+      post '/play_game', :game_id => 6, :spot => "0"
+      get '/play_game', :game_id => 6
       expect(last_response.body).to include(@player_one_marker)
     end
 
     it "should go to end game and show won when game has been won" do
       follow_redirect!
-      post '/play_game', :game_id => 8, :spot => "0"
-      post '/play_game', :game_id => 8, :spot => "1"
-      post '/play_game', :game_id => 8, :spot => "3"
-      post '/play_game', :game_id => 8, :spot => "4"
-      post '/play_game', :game_id => 8, :spot => "6"
-      post '/play_game', :game_id => 8, :spot => "7"
+      post '/play_game', :game_id => 7, :spot => "0"
+      post '/play_game', :game_id => 7, :spot => "1"
+      post '/play_game', :game_id => 7, :spot => "3"
+      post '/play_game', :game_id => 7, :spot => "4"
+      post '/play_game', :game_id => 7, :spot => "6"
+      post '/play_game', :game_id => 7, :spot => "7"
       expect(last_response.body).to include("Won")
     end
 
     it "should go to end game and show tied when game has been tied" do
       follow_redirect!
-      post '/play_game', :game_id => 9, :spot => "0"
-      post '/play_game', :game_id => 9, :spot => "1"
-      post '/play_game', :game_id => 9, :spot => "2"
-      post '/play_game', :game_id => 9, :spot => "3"
-      post '/play_game', :game_id => 9, :spot => "4"
-      post '/play_game', :game_id => 9, :spot => "6"
-      post '/play_game', :game_id => 9, :spot => "5"
-      post '/play_game', :game_id => 9, :spot => "8"
-      post '/play_game', :game_id => 9, :spot => "7"
+      post '/play_game', :game_id => 8, :spot => "0"
+      post '/play_game', :game_id => 8, :spot => "1"
+      post '/play_game', :game_id => 8, :spot => "2"
+      post '/play_game', :game_id => 8, :spot => "3"
+      post '/play_game', :game_id => 8, :spot => "4"
+      post '/play_game', :game_id => 8, :spot => "6"
+      post '/play_game', :game_id => 8, :spot => "5"
+      post '/play_game', :game_id => 8, :spot => "8"
+      post '/play_game', :game_id => 8, :spot => "7"
       expect(last_response.body).to include("Tied")
     end
-
   end
-
 end
