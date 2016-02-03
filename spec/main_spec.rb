@@ -1,10 +1,10 @@
 require 'rack/test'
 require 'rspec'
+require_relative 'game_mock.rb'
 require File.expand_path '../../main.rb', __FILE__
 require File.expand_path '../../lib/game.rb', __FILE__
 
 ENV['RACK_ENV'] = 'test'
-
 
 module RSpecMixin
   include Rack::Test::Methods
@@ -104,8 +104,7 @@ describe "Tic Tac Toe Web App" do
       game = set_up_new_game(game)
   		game.save
       post '/play_game', :game_id => game.id, :spot => "0"
-      game_rules = create_new_game_rules(game)
-      game = game_turn(game, game_rules, "0")
+      game = game_turn(game, create_new_game_rules(game), "0")
       game.save
       get '/play_game', :game_id => game.id
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
@@ -116,8 +115,7 @@ describe "Tic Tac Toe Web App" do
   		game = set_up_new_game(game)
   		game.save
       post '/play_game', :game_id => game.id, :spot => "0"
-      game_rules = create_new_game_rules(game)
-      game = game_turn(game, game_rules, "0")
+      game = game_turn(game, create_new_game_rules(game), "0")
       game.save
       get '/play_game', :game_id => game.id
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
