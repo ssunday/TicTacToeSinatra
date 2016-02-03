@@ -8,10 +8,12 @@ require_relative 'presenters/previous_games_page.rb'
 require_relative 'presenters/end_game_page.rb'
 
 include GameUtilityFunctions
+configure do
+	DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
+	DataMapper.auto_upgrade!
+	DataMapper.finalize
+end
 
-DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-DataMapper.auto_upgrade!
-DataMapper.finalize
 
 get '/' do
 	@title = 'Home'
@@ -39,8 +41,7 @@ post '/settings' do
 		player_two_marker: params[:player_two_marker],\
 		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
 		game.save
-		@view = PlayGamePage.new(game)
-		erb :play_game
+		redirect "/play_game?game_id=#{game.id}"
 	end
 end
 

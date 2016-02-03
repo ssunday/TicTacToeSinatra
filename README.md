@@ -4,7 +4,7 @@ Tic Tac Toe Web App
 
 ## Description
 
-Allows two players to play Tic Tac Toe as a web app, locally or online. Made using Sinatra and Ruby and deployed with Heroku.
+Allows two players to play Tic Tac Toe as a web app, locally or online. Made using Sinatra and Ruby and deployed with Heroku. Users can resume unfinished games or view previous completed games.
 
 ### Installation
 
@@ -26,6 +26,7 @@ And then go to http://localhost:4567/
 
 
 ### History
+3/1/2016 - Presenters, file decoupling. Can resume games.
 27/1/2016 - Converted to a database system and now allows users to see previous games.
 25/1/2016 - Deployed with heroku
 25/1/2016 - removed code duplication and created ReadMe
