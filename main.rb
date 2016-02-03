@@ -1,8 +1,6 @@
 require 'sinatra'
 require 'sinatra/formkeeper'
 require 'data_mapper'
-require_relative 'lib/tic_tac_toe_rules.rb'
-require_relative 'lib/tic_tac_toe_ai.rb'
 require_relative 'lib/game.rb'
 require_relative 'lib/game_utility_functions.rb'
 require_relative 'presenters/play_game_page.rb'

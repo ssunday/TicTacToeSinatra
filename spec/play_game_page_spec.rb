@@ -1,7 +1,6 @@
 require File.expand_path '../../presenters/play_game_page.rb', __FILE__
 require File.expand_path '../../lib/game.rb', __FILE__
 
-
 describe PlayGamePage do
 
   before do
