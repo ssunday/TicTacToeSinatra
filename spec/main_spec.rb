@@ -1,6 +1,5 @@
 require 'rack/test'
 require 'rspec'
-require_relative 'game_mock.rb'
 require File.expand_path '../../main.rb', __FILE__
 require File.expand_path '../../lib/game.rb', __FILE__
 
@@ -160,4 +159,5 @@ describe "Tic Tac Toe Web App" do
     end
 
   end
+
 end
