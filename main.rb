@@ -37,7 +37,8 @@ end
 
 post '/play_game' do
 	@title = "Play Game"
-	game = do_game_turn(params[:game_id], params[:spot])
+	game = get_game_given_id(params[:game_id])
+	game = do_game_turn(game, params[:spot])
   if active?(game)
 		@view = PlayGamePage.new(game)
     erb :play_game

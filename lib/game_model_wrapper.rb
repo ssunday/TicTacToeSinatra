@@ -1,13 +1,13 @@
 require_relative 'game.rb'
 require_relative 'game_utility_functions.rb'
 
-configure do
-	DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-	DataMapper.auto_upgrade!
-	DataMapper.finalize
-end
+
+DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
+DataMapper.auto_upgrade!
+DataMapper.finalize
 
 module GameModelWrapper
+
   include GameUtilityFunctions
 
   def create_game(params = {})
@@ -19,16 +19,11 @@ module GameModelWrapper
     game
   end
 
-  def do_game_turn(game_id, spot)
-    game = Game.get(game_id)
+  def do_game_turn(game, spot)
   	game_rules = create_new_game_rules(game)
   	game = game_turn(game, game_rules, spot)
   	game.save
     game
-  end
-
-  def get_id(game)
-    game.id
   end
 
   def active?(game)
