@@ -11,16 +11,16 @@ class PreviousGamesPage
       boards += show_markers_and_turns(unfinished_game)
       boards += show_board(unfinished_game)
       boards += add_resume_button(unfinished_game)
-      end
-      boards
     end
+    boards
+  end
 
-    def show_previous_games
-      string_to_show = ""
-      @previous_games.each do |previous_game|
-        string_to_show += show_end_state(previous_game)
-        string_to_show += show_board(previous_game)
-      end
+  def show_previous_games
+    string_to_show = ""
+    @previous_games.each do |previous_game|
+      string_to_show += show_end_state(previous_game)
+      string_to_show += show_board(previous_game)
+    end
     string_to_show
   end
 

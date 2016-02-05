@@ -8,10 +8,6 @@ class TicTacToeRules
     @board = initial_board
   end
 
-  def return_self
-    return self
-  end
-
   def game_turn(spot)
     @board.set_board_location(spot, player_turn)
     switch_turn

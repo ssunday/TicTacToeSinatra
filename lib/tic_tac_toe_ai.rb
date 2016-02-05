@@ -14,6 +14,7 @@ class TicTacToeAi
     end
 
     available_spaces = get_possible_moves(board)
+    
     available_spaces.each do |space|
       board.set_board_location(space.to_i, current_player)
       next_player = switch_turn(current_player)
@@ -40,7 +41,6 @@ class TicTacToeAi
     elsif tied?(board)
         return 0
     end
-
   end
 
   private

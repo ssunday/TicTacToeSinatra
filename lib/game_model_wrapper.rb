@@ -30,13 +30,6 @@ module GameModelWrapper
     game.active
   end
 
-  def end_game(game)
-    game_rules = create_new_game_rules(game)
-		game = assign_end_game_state(game, game_rules)
-		game.save
-    game
-  end
-
   def get_game_given_id(game_id)
     Game.get(game_id)
   end

@@ -42,11 +42,9 @@ module GameUtilityFunctions
   def get_location_chosen(game, spot)
     current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
     if game.player_turn.eql?(game.player_one_marker) && game.player_one_ai
-  		player_one_ai = TicTacToeAi.new(ai_marker: game.player_one_marker, other_player_marker: game.player_two_marker)
-  		player_one_ai.move(current_board, game.player_one_marker)
+      get_ai_move(game.player_one_marker, game.player_two_marker, current_board)
   	elsif game.player_turn.eql?(game.player_two_marker) && game.player_two_ai
-  		player_two_ai = TicTacToeAi.new(ai_marker: game.player_two_marker, other_player_marker: game.player_one_marker)
-  		player_two_ai.move(current_board, game.player_two_marker)
+      get_ai_move(game.player_two_marker, game.player_one_marker, current_board)
   	else
   		spot.to_i
   	end
@@ -58,6 +56,7 @@ module GameUtilityFunctions
   	game.game_board = game_rules.get_array_board
   	game.player_turn = game_rules.player_turn
     if game_rules.game_over?
+      game = assign_end_game_state(game, game_rules)
       game.active = false
     end
     game.save
@@ -74,6 +73,13 @@ module GameUtilityFunctions
     end
   	game.save
     game
+  end
+
+  private
+
+  def get_ai_move(ai_player_marker, other_player_marker, current_board)
+    ai_player = TicTacToeAi.new(ai_marker: ai_player_marker, other_player_marker: other_player_marker)
+    ai_player.move(current_board, ai_player_marker)
   end
 
 end

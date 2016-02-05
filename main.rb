@@ -43,7 +43,6 @@ post '/play_game' do
 		@view = PlayGamePage.new(game)
     erb :play_game
   else
-		game = end_game(game)
 		@view = EndGamePage.new(game)
     erb :end_game
   end
