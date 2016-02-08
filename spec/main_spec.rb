@@ -78,13 +78,11 @@ describe "Tic Tac Toe Web App" do
       game.player_two_ai = false
       game.player_turn = @player_one_marker
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-      game.save
-      game
     end
 
     it "should be ok" do
       game = Game.new
-      game = set_up_new_game(game)
+      set_up_new_game(game)
   		game.save
       get '/play_game', :game_id => game.id
       expect(last_response).to be_ok
@@ -92,7 +90,7 @@ describe "Tic Tac Toe Web App" do
 
     it "should post with player input" do
       game = Game.new
-  		game = set_up_new_game(game)
+  		set_up_new_game(game)
   		game.save
       post '/play_game', :game_id => game.id, :spot => "0"
       expect(last_response).to be_ok
@@ -100,10 +98,10 @@ describe "Tic Tac Toe Web App" do
 
     it "should post with player input and switch to next turn" do
       game = Game.new
-      game = set_up_new_game(game)
+      set_up_new_game(game)
   		game.save
       post '/play_game', :game_id => game.id, :spot => "0"
-      game = game_turn(game, create_new_game_rules(game), "0")
+      game_turn(game, create_new_game_rules(game), "0")
       game.save
       get '/play_game', :game_id => game.id
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
@@ -111,10 +109,10 @@ describe "Tic Tac Toe Web App" do
 
     it "should post with player input and show marked location" do
       game = Game.new
-  		game = set_up_new_game(game)
+  		set_up_new_game(game)
   		game.save
       post '/play_game', :game_id => game.id, :spot => "0"
-      game = game_turn(game, create_new_game_rules(game), "0")
+      game_turn(game, create_new_game_rules(game), "0")
       game.save
       get '/play_game', :game_id => game.id
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
@@ -123,29 +121,25 @@ describe "Tic Tac Toe Web App" do
 
     it "should go to end game and show won when game has been won" do
       game = Game.new
-      game = set_up_new_game(game)
+      set_up_new_game(game)
   		game.save
-      post '/play_game', :game_id => game.id, :spot => "0"
-      post '/play_game', :game_id => game.id, :spot => "1"
-      post '/play_game', :game_id => game.id, :spot => "3"
-      post '/play_game', :game_id => game.id, :spot => "4"
-      post '/play_game', :game_id => game.id, :spot => "6"
+      game.game_board = [\
+          "X", "X", "O", \
+          "O", "X", "X", \
+          "X", "7", "O"]
+  		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Won")
     end
 
     it "should go to end game and show tied when game has been tied" do
       game = Game.new
-      game = set_up_new_game(game)
+      set_up_new_game(game)
+      game.game_board = [\
+          "X", "X", "O", \
+          "O", "O", "X", \
+          "X", "7", "O"]
   		game.save
-      post '/play_game', :game_id => game.id, :spot => "0"
-      post '/play_game', :game_id => game.id, :spot => "1"
-      post '/play_game', :game_id => game.id, :spot => "2"
-      post '/play_game', :game_id => game.id, :spot => "3"
-      post '/play_game', :game_id => game.id, :spot => "4"
-      post '/play_game', :game_id => game.id, :spot => "6"
-      post '/play_game', :game_id => game.id, :spot => "5"
-      post '/play_game', :game_id => game.id, :spot => "8"
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Tied")
     end

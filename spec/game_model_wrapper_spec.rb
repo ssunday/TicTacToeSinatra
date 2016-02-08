@@ -24,7 +24,7 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
-      game = do_game_turn(game, "0")
+      do_game_turn(game, "0")
       expect(game.game_board).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
     end
 
@@ -32,7 +32,7 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
-      game = do_game_turn(game, "0")
+      do_game_turn(game, "0")
       expect(game.player_turn).to eq @player_two_marker
     end
 
@@ -51,12 +51,12 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
-      game.game_board = [@player_one_marker, @player_one_marker, @player_two_marker, @player_two_marker, "4", @player_two_marker, @player_two_marker, @player_two_marker, @player_two_marker]
-      game = do_game_turn(game, "4")
+      game.game_board = [\
+        @player_one_marker, @player_one_marker, @player_two_marker, \
+        @player_two_marker, "4", @player_two_marker, \
+        @player_two_marker, @player_two_marker, @player_two_marker]
+      do_game_turn(game, "4")
       expect(active?(game)).to eq false
     end
-
   end
-
-
 end

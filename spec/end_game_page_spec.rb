@@ -7,7 +7,7 @@ describe EndGamePage do
     @game = Game.new
     @player_one_marker = "X"
     @player_two_marker = "O"
-    @game = set_up_game(game: @game, player_one_type: "AI", player_two_type: "Human", \
+    set_up_game(game: @game, player_one_type: "AI", player_two_type: "Human", \
     player_one_marker: @player_one_marker, \
     player_two_marker: @player_two_marker, \
     first_player: "player_one_marker"

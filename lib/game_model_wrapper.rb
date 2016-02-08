@@ -30,7 +30,7 @@ module GameModelWrapper
   end
 
   def get_id_of_game(game)
-    Game.id
+    game.id
   end
 
   def get_game_given_id(game_id)

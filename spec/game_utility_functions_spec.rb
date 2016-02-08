@@ -4,49 +4,34 @@ require 'game'
 
 include GameUtilityFunctions
 
-describe "Tic Tac Toe Game Setup Module" do
+describe "Tic Tac Toe Utility Functions" do
 
-  def win_game
-    @game.player_one_ai = false
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 0)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 1)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 3)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 4)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 6)
+  def win_game_player_two
+    @game.game_board = [\
+      @game.player_two_marker, "1", @game.player_two_marker, \
+      @game.player_two_marker, @game.player_one_marker, @game.player_one_marker, \
+      @game.player_two_marker, "7", "8"]
+  end
+
+  def win_game_player_one
+    @game.game_board = [\
+      @game.player_one_marker, "1", @game.player_two_marker, \
+      @game.player_one_marker, @game.player_two_marker, @game.player_two_marker, \
+      @game.player_one_marker, "7", "8"]
   end
 
   def tie_game
-    @game.player_one_ai = false
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 0)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 1)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 2)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 3)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 4)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 6)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 5)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 8)
-    game_rules = create_new_game_rules(@game)
-    @game = game_turn(@game, game_rules, 7)
+    @game.game_board =  [\
+      @game.player_one_marker, @game.player_two_marker, @game.player_two_marker, \
+      @game.player_two_marker, @game.player_one_marker, @game.player_one_marker, \
+      @game.player_one_marker, @game.player_two_marker, @game.player_two_marker]
   end
 
   before do
     @game = Game.new
     @player_one_marker = "X"
     @player_two_marker = "O"
-    @game = set_up_game(game: @game, player_one_type: "AI", player_two_type: "Human", \
+    set_up_game(game: @game, player_one_type: "AI", player_two_type: "Human", \
     player_one_marker: @player_one_marker, \
     player_two_marker: @player_two_marker, \
     first_player: "player_one_marker"
@@ -104,14 +89,14 @@ describe "Tic Tac Toe Game Setup Module" do
   describe "#game_turn" do
     it "correctly plays a turn with AI going" do
       game_rules = create_new_game_rules(@game)
-      @game = game_turn(@game, game_rules, nil)
+      game_turn(@game, game_rules, nil)
       expect(@game.game_board).to eq ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
     end
 
     it "correctly plays a turn with player going" do
       @game.player_turn = @player_two_marker
       game_rules = create_new_game_rules(@game)
-      @game = game_turn(@game, game_rules, 4)
+      game_turn(@game, game_rules, 4)
       expect(@game.game_board).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
     end
   end
@@ -119,24 +104,24 @@ describe "Tic Tac Toe Game Setup Module" do
   describe "#assign_end_game_state" do
 
     it "assigns player one win as a player one win" do
-      win_game
+      @game.player_turn = @player_two_marker
+      win_game_player_one
       game_rules = create_new_game_rules(@game)
-      @game = assign_end_game_state(@game, game_rules)
+      assign_end_game_state(@game, game_rules)
       expect(@game.end_game_state).to eq "Player One Won"
     end
 
     it "assigns player two win as a player two win" do
-      @game.player_turn = @player_two_marker
-      win_game
+      win_game_player_two
       game_rules = create_new_game_rules(@game)
-      @game = assign_end_game_state(@game, game_rules)
+      assign_end_game_state(@game, game_rules)
       expect(@game.end_game_state).to eq "Player Two Won"
     end
 
     it "assigns tied as tied" do
       tie_game
       game_rules = create_new_game_rules(@game)
-      @game = assign_end_game_state(@game, game_rules)
+      assign_end_game_state(@game, game_rules)
       expect(@game.end_game_state).to eq "Tied"
     end
 
