@@ -7,31 +7,10 @@ module GameUtilityFunctions
   def set_up_game(params = {})
     game = params[:game]
     game.active = true
-
-    game.player_one_marker = params[:player_one_marker]
-    game.player_two_marker = params[:player_two_marker]
-
-		if params[:first_player].eql?("player_one_marker")
-			game.player_turn = params[:player_one_marker]
-		else
-			game.player_turn = params[:player_two_marker]
-		end
-
-		if params[:player_one_type].eql?("AI")
-			game.player_one_ai = true
-		else
-			game.player_one_ai = false
-		end
-
-		if params[:player_two_type].eql?("AI")
-			game.player_two_ai = true
-		else
-			game.player_two_ai = false
-		end
-    game_board = TicTacToeBoard.new
-		game.game_board = game_board.board
-    game.save
-    game
+    assign_markers(game, params[:player_one_marker], params[:player_two_marker])
+    assign_initial_player_turn(game, params[:first_player])
+    assign_player_ai(game, params[:player_one_type], params[:player_two_type])
+    assign_new_game_board(game)
   end
 
   def create_new_game_rules(game)
@@ -56,11 +35,9 @@ module GameUtilityFunctions
   	game.game_board = game_rules.get_array_board
   	game.player_turn = game_rules.player_turn
     if game_rules.game_over?
-      game = assign_end_game_state(game, game_rules)
+      assign_end_game_state(game, game_rules)
       game.active = false
     end
-    game.save
-    game
   end
 
   def assign_end_game_state(game, game_rules)
@@ -71,11 +48,47 @@ module GameUtilityFunctions
     else
   			game.end_game_state = "Tied"
     end
-  	game.save
-    game
   end
 
   private
+
+  def assign_markers(game, player_one_marker, player_two_marker)
+    game.player_one_marker = player_one_marker
+    game.player_two_marker = player_two_marker
+  end
+
+  def assign_player_ai(game, player_one_type, player_two_type)
+    assign_player_one_ai(game, player_one_type)
+    assign_player_two_ai(game, player_two_type)
+  end
+
+  def assign_player_one_ai(game, player_one_type)
+    if player_one_type.eql?("AI")
+			game.player_one_ai = true
+		else
+			game.player_one_ai = false
+		end
+  end
+
+  def assign_player_two_ai(game, player_two_type)
+    if player_two_type.eql?("AI")
+			game.player_two_ai = true
+		else
+			game.player_two_ai = false
+		end
+  end
+
+  def assign_initial_player_turn(game, first_player)
+    if first_player.eql?("player_one_marker")
+			game.player_turn = game.player_one_marker
+		else
+			game.player_turn = game.player_two_marker
+		end
+  end
+
+  def assign_new_game_board(game)
+		game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  end
 
   def get_ai_move(ai_player_marker, other_player_marker, current_board)
     ai_player = TicTacToeAi.new(ai_marker: ai_player_marker, other_player_marker: other_player_marker)

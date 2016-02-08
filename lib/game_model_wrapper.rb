@@ -12,7 +12,7 @@ module GameModelWrapper
 
   def create_game(params = {})
     game = Game.new
-		game = set_up_game(game: game, player_one_marker: params[:player_one_marker], \
+		set_up_game(game: game, player_one_marker: params[:player_one_marker], \
 		player_two_marker: params[:player_two_marker],\
 		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
 		game.save
@@ -21,13 +21,16 @@ module GameModelWrapper
 
   def do_game_turn(game, spot)
   	game_rules = create_new_game_rules(game)
-  	game = game_turn(game, game_rules, spot)
+  	game_turn(game, game_rules, spot)
   	game.save
-    game
   end
 
   def active?(game)
     game.active
+  end
+
+  def get_id_of_game(game)
+    Game.id
   end
 
   def get_game_given_id(game_id)

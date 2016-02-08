@@ -1,3 +1,4 @@
+
 class PreviousGamesPage
 
   def initialize(previous_games, unfinished_games)
