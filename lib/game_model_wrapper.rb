@@ -29,10 +29,6 @@ module GameModelWrapper
     game.active
   end
 
-  def get_id_of_game(game)
-    game.id
-  end
-
   def get_game_given_id(game_id)
     Game.get(game_id)
   end

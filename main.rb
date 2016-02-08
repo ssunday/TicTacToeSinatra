@@ -24,7 +24,7 @@ post '/settings' do
 		game = create_game(player_one_marker: params[:player_one_marker], \
 		player_two_marker: params[:player_two_marker],\
 		first_player: params[:first_player], player_one_type: params[:player_one_type], player_two_type: params[:player_two_type])
-		redirect "/play_game?game_id=#{get_id_of_game(game)}"
+		redirect "/play_game?game_id=#{game.id}"
 	end
 end
 
