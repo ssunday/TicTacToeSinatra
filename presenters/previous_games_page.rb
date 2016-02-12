@@ -1,3 +1,6 @@
+require File.expand_path '../../lib/game_utility_functions.rb', __FILE__
+
+include GameUtilityFunctions
 
 class PreviousGamesPage
 
@@ -70,7 +73,7 @@ class PreviousGamesPage
   end
 
   def show_board(game)
-    board = game.game_board.split(' ')
+    board = de_serialize_board(game.game_board)
     "
     <table>
     <tr>
