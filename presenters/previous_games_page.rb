@@ -51,6 +51,10 @@ class PreviousGamesPage
   end
 
   def show_board(game)
+<<<<<<< Updated upstream
+    board = game.game_board.split(' ')
+=======
+>>>>>>> Stashed changes
     "
     <table>
     <tr>

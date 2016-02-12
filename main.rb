@@ -31,7 +31,8 @@ end
 get '/play_game' do
 	@title = "Play Game"
 	game = get_game_given_id(params[:game_id])
-	@view = PlayGamePage.new(game)
+	board = de_serialize_board(game.game_board)
+	@view = PlayGamePage.new(game, board)
 	erb :play_game
 end
 
@@ -40,7 +41,8 @@ post '/play_game' do
 	game = get_game_given_id(params[:game_id])
 	do_game_turn(game, params[:spot])
   if active?(game)
-		@view = PlayGamePage.new(game)
+		board = de_serialize_board(game.game_board)
+		@view = PlayGamePage.new(game, board)
     erb :play_game
   else
 		@view = EndGamePage.new(game)

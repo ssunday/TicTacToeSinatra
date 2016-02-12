@@ -1,7 +1,11 @@
 class PlayGamePage
 
-  def initialize(game)
+  def initialize(game,board)
     @game = game
+<<<<<<< Updated upstream
+    @game_board = board
+=======
+>>>>>>> Stashed changes
   end
 
   def human_player_turn?
