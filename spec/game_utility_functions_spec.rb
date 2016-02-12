@@ -7,63 +7,21 @@ include GameUtilityFunctions
 describe "Tic Tac Toe Utility Functions" do
 
   def win_game_player_two
-<<<<<<< HEAD
-<<<<<<< HEAD
     @game.game_board = serialize_board([\
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-    @game.game_board = serialize_board([\
-=======
-    @game.game_board = [\
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
       @game.player_two_marker, "1", @game.player_two_marker, \
       @game.player_two_marker, @game.player_one_marker, @game.player_one_marker, \
       @game.player_two_marker, "7", "8"])
   end
 
   def win_game_player_one
-<<<<<<< HEAD
-<<<<<<< HEAD
     @game.game_board = serialize_board([\
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-    @game.game_board = serialize_board([\
-=======
-    @game.game_board = [\
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
       @game.player_one_marker, "1", @game.player_two_marker, \
       @game.player_one_marker, @game.player_two_marker, @game.player_two_marker, \
       @game.player_one_marker, "7", "8"])
   end
 
   def tie_game
-<<<<<<< HEAD
-<<<<<<< HEAD
     @game.game_board =  serialize_board([\
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-    @game.game_board =  serialize_board([\
-=======
-    @game.game_board =  [\
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
       @game.player_one_marker, @game.player_two_marker, @game.player_two_marker, \
       @game.player_two_marker, @game.player_one_marker, @game.player_one_marker, \
       @game.player_one_marker, @game.player_two_marker, @game.player_two_marker])
@@ -131,42 +89,14 @@ describe "Tic Tac Toe Utility Functions" do
     it "correctly plays a turn with AI going" do
       game_rules = create_new_game_rules(@game)
       game_turn(@game, game_rules, nil)
-<<<<<<< HEAD
-<<<<<<< HEAD
       expect(de_serialize_board(@game.game_board)).to eq ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-      expect(de_serialize_board(@game.game_board)).to eq ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
-=======
-      expect(@game.game_board).to eq ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
     end
 
     it "correctly plays a turn with player going" do
       @game.player_turn = @player_two_marker
       game_rules = create_new_game_rules(@game)
       game_turn(@game, game_rules, 4)
-<<<<<<< HEAD
-<<<<<<< HEAD
       expect(de_serialize_board(@game.game_board)).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-      expect(de_serialize_board(@game.game_board)).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
-=======
-      expect(@game.game_board).to eq ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
     end
   end
 

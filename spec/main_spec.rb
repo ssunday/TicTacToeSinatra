@@ -77,23 +77,8 @@ describe "Tic Tac Toe Web App" do
       game.player_one_ai = false
       game.player_two_ai = false
       game.player_turn = @player_one_marker
-<<<<<<< HEAD
-<<<<<<< HEAD
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
       game.active = true
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
-      game.active = true
-=======
-      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
     end
 
     it "should be ok" do
@@ -142,21 +127,7 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "X", "X", \
-<<<<<<< HEAD
-<<<<<<< HEAD
           "X", "7", "O"].join(' ')
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-          "X", "7", "O"].join(' ')
-=======
-          "X", "7", "O"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Won")
@@ -168,21 +139,7 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "O", "X", \
-<<<<<<< HEAD
-<<<<<<< HEAD
           "X", "7", "O"].join(' ')
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-          "X", "7", "O"].join(' ')
-=======
-          "X", "7", "O"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Tied")

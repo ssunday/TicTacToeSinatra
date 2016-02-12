@@ -25,21 +25,7 @@ describe GameModelWrapper do
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
       do_game_turn(game, "0")
-<<<<<<< HEAD
-<<<<<<< HEAD
       expect(de_serialize_board(game.game_board)).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-      expect(de_serialize_board(game.game_board)).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
-=======
-      expect(game.game_board).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
     end
 
     it "switches turn" do
@@ -65,21 +51,7 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
-<<<<<<< HEAD
-<<<<<<< HEAD
       game.game_board = serialize_board([\
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-      game.game_board = serialize_board([\
-=======
-      game.game_board = [\
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
         @player_one_marker, @player_one_marker, @player_two_marker, \
         @player_two_marker, "4", @player_two_marker, \
         @player_two_marker, @player_two_marker, @player_two_marker])

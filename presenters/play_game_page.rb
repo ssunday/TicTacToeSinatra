@@ -2,20 +2,7 @@ class PlayGamePage
 
   def initialize(game,board)
     @game = game
-<<<<<<< HEAD
-<<<<<<< HEAD
     @game_board = board
-=======
-=======
->>>>>>> origin/master
-<<<<<<< Updated upstream
-    @game_board = board
-=======
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
   end
 
   def human_player_turn?
