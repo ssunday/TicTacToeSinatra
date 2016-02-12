@@ -14,22 +14,12 @@ module GameUtilityFunctions
   end
 
   def create_new_game_rules(game)
-<<<<<<< Updated upstream
-    board = de_serialize_board(game.game_board)
-    current_board = TicTacToeBoard.new(board: board)
-=======
 		current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
->>>>>>> Stashed changes
 		TicTacToeRules.new(current_board, first_player: game.player_turn, player_one: game.player_one_marker, player_two: game.player_two_marker)
 	end
 
   def get_location_chosen(game, spot)
-<<<<<<< Updated upstream
-    board = de_serialize_board(game.game_board)
-    current_board = TicTacToeBoard.new(board: board)
-=======
     current_board = TicTacToeBoard.new(board: Array.new(game.game_board))
->>>>>>> Stashed changes
     if game.player_turn.eql?(game.player_one_marker) && game.player_one_ai
       get_ai_move(game.player_one_marker, game.player_two_marker, current_board)
   	elsif game.player_turn.eql?(game.player_two_marker) && game.player_two_ai
@@ -42,11 +32,7 @@ module GameUtilityFunctions
   def game_turn(game, game_rules, spot)
   	location_chosen = get_location_chosen(game, spot)
     game_rules.game_turn(location_chosen)
-<<<<<<< Updated upstream
-  	game.game_board = serialize_board(game_rules.get_array_board)
-=======
   	game.game_board = game_rules.get_array_board
->>>>>>> Stashed changes
   	game.player_turn = game_rules.player_turn
     if game_rules.game_over?
       assign_end_game_state(game, game_rules)
@@ -62,14 +48,6 @@ module GameUtilityFunctions
     else
   			game.end_game_state = "Tied"
     end
-  end
-
-  def de_serialize_board(board)
-    board.split(" ")
-  end
-
-  def serialize_board(board)
-    board.join(" ")
   end
 
   private
@@ -109,12 +87,7 @@ module GameUtilityFunctions
   end
 
   def assign_new_game_board(game)
-<<<<<<< Updated upstream
-    board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-		game.game_board = serialize_board(board)
-=======
 		game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
->>>>>>> Stashed changes
   end
 
   def get_ai_move(ai_player_marker, other_player_marker, current_board)
