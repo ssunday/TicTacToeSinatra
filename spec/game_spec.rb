@@ -36,9 +36,12 @@ describe Game do
   it "creates a game with a game board property that can hold an array" do
     game = Game.new
 <<<<<<< HEAD
+<<<<<<< HEAD
     game.game_board = @game_board.join(' ')
     expect(game.game_board.split(' ')).to eq @game_board
 =======
+=======
+>>>>>>> origin/master
 <<<<<<< Updated upstream
     game.game_board = @game_board.join(' ')
     expect(game.game_board.split(' ')).to eq @game_board
@@ -46,6 +49,9 @@ describe Game do
     game.game_board = @game_board
     expect(game.game_board).to eq @game_board
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
   end
 

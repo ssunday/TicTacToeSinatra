@@ -52,12 +52,18 @@ class PreviousGamesPage
 
   def show_board(game)
 <<<<<<< HEAD
+<<<<<<< HEAD
     board = game.game_board.split(' ')
 =======
+=======
+>>>>>>> origin/master
 <<<<<<< Updated upstream
     board = game.game_board.split(' ')
 =======
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     "
     <table>

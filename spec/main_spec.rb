@@ -78,15 +78,21 @@ describe "Tic Tac Toe Web App" do
       game.player_two_ai = false
       game.player_turn = @player_one_marker
 <<<<<<< HEAD
+<<<<<<< HEAD
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
       game.active = true
 =======
+=======
+>>>>>>> origin/master
 <<<<<<< Updated upstream
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
       game.active = true
 =======
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     end
 
@@ -137,13 +143,19 @@ describe "Tic Tac Toe Web App" do
           "X", "X", "O", \
           "O", "X", "X", \
 <<<<<<< HEAD
+<<<<<<< HEAD
           "X", "7", "O"].join(' ')
 =======
+=======
+>>>>>>> origin/master
 <<<<<<< Updated upstream
           "X", "7", "O"].join(' ')
 =======
           "X", "7", "O"]
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
@@ -157,13 +169,19 @@ describe "Tic Tac Toe Web App" do
           "X", "X", "O", \
           "O", "O", "X", \
 <<<<<<< HEAD
+<<<<<<< HEAD
           "X", "7", "O"].join(' ')
 =======
+=======
+>>>>>>> origin/master
 <<<<<<< Updated upstream
           "X", "7", "O"].join(' ')
 =======
           "X", "7", "O"]
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
