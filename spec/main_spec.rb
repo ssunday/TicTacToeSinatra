@@ -77,7 +77,8 @@ describe "Tic Tac Toe Web App" do
       game.player_one_ai = false
       game.player_two_ai = false
       game.player_turn = @player_one_marker
-      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
+      game.active = true
     end
 
     it "should be ok" do
@@ -126,7 +127,7 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "X", "X", \
-          "X", "7", "O"]
+          "X", "7", "O"].join(' ')
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Won")
@@ -138,7 +139,7 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "O", "X", \
-          "X", "7", "O"]
+          "X", "7", "O"].join(' ')
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Tied")

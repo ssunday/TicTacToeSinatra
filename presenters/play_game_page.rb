@@ -1,7 +1,8 @@
 class PlayGamePage
 
-  def initialize(game)
+  def initialize(game,board)
     @game = game
+    @game_board = board
   end
 
   def human_player_turn?
@@ -62,10 +63,10 @@ class PlayGamePage
   end
 
   def show_cell_value_or_input(cell_number)
-    if @game.game_board[cell_number] != @game.player_one_marker && @game.game_board[cell_number] != @game.player_two_marker && human_player_turn?
+    if @game_board[cell_number] != @game.player_one_marker && @game_board[cell_number] != @game.player_two_marker && human_player_turn?
       "<input type='radio' name='spot' value='#{cell_number}' checked>"
     else
-      "#{@game.game_board[cell_number]}"
+      "#{@game_board[cell_number]}"
     end
   end
 

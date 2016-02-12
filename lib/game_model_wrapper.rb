@@ -1,7 +1,6 @@
 require_relative 'game.rb'
 require_relative 'game_utility_functions.rb'
 
-
 DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
 DataMapper.auto_upgrade!
 DataMapper.finalize
