@@ -10,6 +10,7 @@ class PreviousGamesPage
     boards = ""
     @unfinished_games.each do |unfinished_game|
       boards += show_markers_and_turns(unfinished_game)
+      boards += show_ai_or_player(unfinished_game)
       boards += show_board(unfinished_game)
       boards += add_resume_button(unfinished_game)
     end
@@ -44,10 +45,28 @@ class PreviousGamesPage
 
   def show_markers_and_turns(game)
     " <h2> Current player: #{game.player_turn } </h2>
+      <br>
       <h2> Player One Marker: #{game.player_one_marker } </h2>
       <h2> Player Two Marker: #{game.player_two_marker } </h2>
       <br>
       "
+  end
+
+  def show_ai_or_player(game)
+    ai_or_player_message = ""
+    if game.player_one_ai
+      ai_or_player_message += "<h2>Player One is AI </h2>"
+    else
+      ai_or_player_message += "<h2>Player One is a Player </h2>"
+    end
+
+    if game.player_two_ai
+      ai_or_player_message += "<h2>Player Two is AI </h2>"
+    else
+      ai_or_player_message += "<h2>Player Two is a Player </h2>"
+    end
+    ai_or_player_message += "<br>"
+    ai_or_player_message
   end
 
   def show_board(game)
