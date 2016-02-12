@@ -12,9 +12,11 @@ end
 
 RSpec.configure { |c| c.include RSpecMixin }
 
-DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-DataMapper.auto_migrate!
-DataMapper.finalize
+configure do
+  DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
+  DataMapper.auto_migrate!
+  DataMapper.finalize
+end
 
 describe "Tic Tac Toe Web App" do
 
@@ -75,15 +77,17 @@ describe "Tic Tac Toe Web App" do
       game.player_one_ai = false
       game.player_two_ai = false
       game.player_turn = @player_one_marker
+<<<<<<< Updated upstream
       game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
       game.active = true
+=======
+      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+>>>>>>> Stashed changes
     end
 
     it "should be ok" do
       game = Game.new
-      game = create_game(player_one_marker: @player_one_marker, \
-      player_two_marker: @player_two_marker, \
-      first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
+      set_up_new_game(game)
   		game.save
       get '/play_game', :game_id => game.id
       expect(last_response).to be_ok
@@ -127,7 +131,11 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "X", "X", \
+<<<<<<< Updated upstream
           "X", "7", "O"].join(' ')
+=======
+          "X", "7", "O"]
+>>>>>>> Stashed changes
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Won")
@@ -139,7 +147,11 @@ describe "Tic Tac Toe Web App" do
       game.game_board = [\
           "X", "X", "O", \
           "O", "O", "X", \
+<<<<<<< Updated upstream
           "X", "7", "O"].join(' ')
+=======
+          "X", "7", "O"]
+>>>>>>> Stashed changes
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Tied")

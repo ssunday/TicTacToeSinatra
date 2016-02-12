@@ -51,40 +51,43 @@ class PreviousGamesPage
   end
 
   def show_board(game)
+<<<<<<< Updated upstream
     board = game.game_board.split(' ')
+=======
+>>>>>>> Stashed changes
     "
     <table>
     <tr>
       <td style='padding: 0 15px 0 15px;'>
-      #{board[0]}
+      #{game.game_board[0]}
       </td>
       <td style='padding: 0 15px 0 15px;'>
-      #{board[1]}
+      #{game.game_board[1]}
       </td>
       <td style='padding: 0 15px 0 15px;'>
-      #{board[2]}
-      </td>
-    </tr>
-    <tr>
-      <td style='padding: 0 15px 0 15px;'>
-      #{board[3]}
-      </td>
-      <td style='padding: 0 15px 0 15px;'>
-      #{board[4]}
-      </td>
-      <td style='padding: 0 15px 0 15px;'>
-      #{board[5]}
+      #{game.game_board[2]}
       </td>
     </tr>
     <tr>
       <td style='padding: 0 15px 0 15px;'>
-      #{board[6]}
+      #{game.game_board[3]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[4]}
+      </td>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[5]}
+      </td>
+    </tr>
+    <tr>
+      <td style='padding: 0 15px 0 15px;'>
+      #{game.game_board[6]}
       </td>
       <td style= 'padding: 0 15px 0 15px';>
-      #{board[7]}
+      #{game.game_board[7]}
       </td>
       <td style='padding: 0 15px 0 15px;'>
-      #{board[8]}
+      #{game.game_board[8]}
       </td>
     </tr>
     </table>

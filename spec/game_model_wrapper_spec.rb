@@ -1,8 +1,6 @@
 require 'rspec'
 require File.expand_path '../../lib/game_model_wrapper.rb', __FILE__
 
-include GameModelWrapper
-
 describe GameModelWrapper do
 
   before do
@@ -27,7 +25,11 @@ describe GameModelWrapper do
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
       do_game_turn(game, "0")
+<<<<<<< Updated upstream
       expect(de_serialize_board(game.game_board)).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
+=======
+      expect(game.game_board).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
+>>>>>>> Stashed changes
     end
 
     it "switches turn" do
@@ -53,10 +55,14 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
+<<<<<<< Updated upstream
       game.game_board = serialize_board([\
+=======
+      game.game_board = [\
+>>>>>>> Stashed changes
         @player_one_marker, @player_one_marker, @player_two_marker, \
         @player_two_marker, "4", @player_two_marker, \
-        @player_two_marker, @player_two_marker, @player_two_marker])
+        @player_two_marker, @player_two_marker, @player_two_marker]
       do_game_turn(game, "4")
       expect(active?(game)).to eq false
     end

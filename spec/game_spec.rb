@@ -1,9 +1,7 @@
 require 'data_mapper'
 require File.expand_path '../../lib/game.rb', __FILE__
 
-DataMapper.setup(:default, 'postgres://xeuqunygyaxxxv:f7RVOavZHHpP_SFrunnlEN1ErQ@ec2-54-225-195-249.compute-1.amazonaws.com:5432/do4clntk7ijkk')
-DataMapper.auto_migrate!
-DataMapper.finalize
+DataMapper.setup(:default, "abstract::")
 
 describe Game do
 
@@ -37,8 +35,13 @@ describe Game do
 
   it "creates a game with a game board property that can hold an array" do
     game = Game.new
+<<<<<<< Updated upstream
     game.game_board = @game_board.join(' ')
     expect(game.game_board.split(' ')).to eq @game_board
+=======
+    game.game_board = @game_board
+    expect(game.game_board).to eq @game_board
+>>>>>>> Stashed changes
   end
 
   it "creates a game with a boolean for whether player one is an ai" do
