@@ -27,7 +27,7 @@ describe GameModelWrapper do
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
       do_game_turn(game, "0")
-      expect(Marshal.load(game.game_board)).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
+      expect(de_serialize_board(game.game_board)).to eq [@player_one_marker, "1", "2", "3", "4", "5", "6", "7", "8"]
     end
 
     it "switches turn" do
@@ -53,7 +53,7 @@ describe GameModelWrapper do
       game = create_game(player_one_marker: @player_one_marker, \
       player_two_marker: @player_two_marker, \
       first_player: "player_one_marker", player_one_type: @player_one_type, player_two_type: @player_two_type)
-      game.game_board = Marshal.dump([\
+      game.game_board = serialize_board([\
         @player_one_marker, @player_one_marker, @player_two_marker, \
         @player_two_marker, "4", @player_two_marker, \
         @player_two_marker, @player_two_marker, @player_two_marker])

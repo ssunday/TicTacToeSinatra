@@ -51,7 +51,7 @@ class PreviousGamesPage
   end
 
   def show_board(game)
-    board = Marshal.load(game.game_board)
+    board = game.game_board.split(' ')
     "
     <table>
     <tr>

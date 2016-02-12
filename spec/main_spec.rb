@@ -29,7 +29,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response).to be_ok
     end
 
-    xit "the previous games page" do
+    it "the previous games page" do
       get '/previous_games'
       expect(last_response).to be_ok
     end
@@ -75,7 +75,7 @@ describe "Tic Tac Toe Web App" do
       game.player_one_ai = false
       game.player_two_ai = false
       game.player_turn = @player_one_marker
-      game.game_board = Marshal.dump(["0", "1", "2", "3", "4", "5", "6", "7", "8"])
+      game.game_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"].join(' ')
       game.active = true
     end
 
@@ -89,7 +89,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response).to be_ok
     end
 
-    xit "should post with player input" do
+    it "should post with player input" do
       game = Game.new
   		set_up_new_game(game)
   		game.save
@@ -97,7 +97,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response).to be_ok
     end
 
-    xit "should post with player input and switch to next turn" do
+    it "should post with player input and switch to next turn" do
       game = Game.new
       set_up_new_game(game)
   		game.save
@@ -108,7 +108,7 @@ describe "Tic Tac Toe Web App" do
       expect(last_response.body).to include("Marker: #{@player_two_marker}")
     end
 
-    xit "should post with player input and show marked location" do
+    it "should post with player input and show marked location" do
       game = Game.new
   		set_up_new_game(game)
   		game.save
@@ -124,10 +124,10 @@ describe "Tic Tac Toe Web App" do
       game = Game.new
       set_up_new_game(game)
   		game.save
-      game.game_board = Marshal.dump([\
+      game.game_board = [\
           "X", "X", "O", \
           "O", "X", "X", \
-          "X", "7", "O"])
+          "X", "7", "O"].join(' ')
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Won")
@@ -136,10 +136,10 @@ describe "Tic Tac Toe Web App" do
     it "should go to end game and show tied when game has been tied" do
       game = Game.new
       set_up_new_game(game)
-      game.game_board = Marshal.dump([\
+      game.game_board = [\
           "X", "X", "O", \
           "O", "O", "X", \
-          "X", "7", "O"])
+          "X", "7", "O"].join(' ')
   		game.save
       post '/play_game', :game_id => game.id, :spot => "7"
       expect(last_response.body).to include("Tied")

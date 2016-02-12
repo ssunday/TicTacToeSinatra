@@ -1,8 +1,8 @@
 class PlayGamePage
 
-  def initialize(game)
+  def initialize(game,board)
     @game = game
-    @game_board = Marshal.load(@game.game_board)
+    @game_board = board
   end
 
   def human_player_turn?
